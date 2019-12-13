@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Teacher\Auth;
 
-use App\Teacher;
+use App\Models\Teacher;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
