@@ -58,7 +58,7 @@
                 </a>
             </li>
             <li class="nav-item  ">
-                <a class="nav-link " href="#">
+                <a class="nav-link " href="{{ route('teacher.exams') }}">
                     <i class="material-icons">format_list_numbered</i>
                     <p> Sınavlar </p>
                 </a>
