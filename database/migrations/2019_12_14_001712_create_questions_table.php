@@ -16,6 +16,7 @@ class CreateQuestionsTable extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->bigIncrements('question_id');
             $table->unsignedInteger('exam_id');
+            $table->smallInteger('sort');
             $table->string('content');
             $table->string('option_A');
             $table->string('option_B');
@@ -23,7 +24,7 @@ class CreateQuestionsTable extends Migration
             $table->string('option_D');
             $table->string('option_E');
             $table->string('image_path')->nullable();
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->string('right_options');
             $table->foreign('exam_id')
                 ->references('exam_id')

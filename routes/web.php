@@ -52,12 +52,17 @@ Route::prefix('/teacher')
     //Route::get('/dashboard','HomeController@index')->name('home')->middleware('guard.verified:teacher,teacher.verification.notice');
     Route::get('','HomeController@index')->name('home');
 
-        Route::middleware('auth:teacher')->group(function () {
+    Route::middleware('auth:teacher')->group(function () {
 
-                Route::get('/exams','ExamController@index')->name('exams');
-                Route::get('/exams/new','ExamController@new')->name('exams.new');
+            Route::get('/exams','ExamController@index')->name('exams');
+            Route::get('/exams/new/{id?}','ExamController@create')->name('exams.new');
+            Route::post('/exams/store','ExamController@store')->name('exams.store');
 
-            });
+            Route::post('/question','QuestionController@store')->name('question.store');
+
+        });
+
+
 
 
 

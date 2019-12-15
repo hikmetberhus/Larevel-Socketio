@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Teacher;
 
+use App\Models\Exams\Question;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Exams\Exam;
+use Illuminate\Support\Facades\Auth;
 
 class ExamController extends Controller
 {
@@ -24,9 +27,15 @@ class ExamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function new()
+    public function create($exam_id = null)
     {
-        return view('newQuiz');
+        if ($exam_id != null){
+            $sort = Question::where('exam_id','=',$exam_id)->get();
+            $sort =count($sort) + 1;
+        }else{
+            $sort = 1;
+        }
+        return view('newQuiz',compact('exam_id','sort'));
     }
 
     /**
@@ -37,7 +46,19 @@ class ExamController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->request_type == 'ajax'){
+            $exam = new Exam;
+            $exam->exam_name = $request->exam_name;
+            $exam->teacher_id = Auth::user()->teacher_id;
+            $exam->save();
+            return response()->json([
+                'success'=>'Exam successfully added.',
+                'exam_id'=> $exam->id
+            ],200);
+        }
+
+
+
     }
 
     /**

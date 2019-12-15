@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Teacher;
 
+use App\Models\Exams\Question;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -35,7 +36,27 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $sort = Question::where('exam_id','=',$request->exam_id)->get();
+
+        $question = new Question;
+        $question->exam_id = $request->exam_id;
+        $question->sort = count($sort) + 1;
+        $question->content = $request->question_content;
+        $question->option_A = $request->option_A;
+        $question->option_B = $request->option_B;
+        $question->option_C = $request->option_C;
+        $question->option_D = $request->option_D;
+        $question->option_E = $request->option_E;
+        $question->description = $request->description;
+        $question->right_options = $request->right_options;
+
+        if($question->save()){
+            return response()->json([
+                        'success'=>'Data is successfully added',
+                        'count'=> count($sort)+1
+                    ]);
+        }
+
     }
 
     /**
