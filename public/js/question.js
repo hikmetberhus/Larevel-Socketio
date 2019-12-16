@@ -72,8 +72,6 @@ $(document).ready(function () {
         })
     }
 
-
-
     function createOptionHtml(start=0,end=5,optionName) {
 
         if (start >= optionName.length){
@@ -109,6 +107,10 @@ $(document).ready(function () {
                 );
             }
         }
+    }
+
+    function listQuestions() {
+
     }
 
 });

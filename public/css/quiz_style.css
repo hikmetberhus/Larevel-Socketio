@@ -71,3 +71,43 @@
 .selected-quiz-text:hover{
     border: 1px solid #CDDC39;
 }
+
+.question-list{
+    background-color: #dfeaf3;
+    padding: 10px;
+    border-radius: 5px;
+    color: #000;
+    margin-top: 20px;
+}
+
+.list-answer-option {
+    border: 2px solid #9C27B0;
+    font-weight: bold;
+    font-size: 20px;
+    position: center;
+    color: #9C27B0;
+    margin-left: 20px;
+    padding-top: 10px;
+    margin-bottom: 10px;
+
+}
+
+.list-answer{
+    border: 2px solid #9C27B0;
+    width: auto;
+    padding: 10px 10px;
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+
+.right-answer-option{
+    border: 2px solid #4CAF50;
+    background-color: #8BC34A;
+    color: #fefefe;
+}
+
+.right-answer{
+    border: 2px solid #4CAF50;
+    background-color: #8BC34A;
+    color: #fefefe;
+}

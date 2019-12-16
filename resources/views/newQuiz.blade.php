@@ -29,6 +29,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="questionList">
+                            @include('layouts.partials.listQuestions')
+                        </div>
                     </div>
                     </form>
                 </div>
@@ -66,6 +69,7 @@
                                             <div class="col-md-8 col-sm-8">
                                                 <textarea name="question_content" id="question_content"  rows="2" data-min-rows="2" class="autoExpand quiz-text mt-2"></textarea>
                                             </div>
+
                                         </div>
                                         <div class="row" >
                                             <div class="col-md-6 col-sm-6 mt-3">

@@ -30,12 +30,13 @@ class ExamController extends Controller
     public function create($exam_id = null)
     {
         if ($exam_id != null){
-            $sort = Question::where('exam_id','=',$exam_id)->get();
-            $sort =count($sort) + 1;
+            $questions = Question::where('exam_id','=',$exam_id)->get();
+            $sort =count($questions) + 1;
         }else{
             $sort = 1;
+            $questions = null;
         }
-        return view('newQuiz',compact('exam_id','sort'));
+        return view('newQuiz',compact('exam_id','sort','questions'));
     }
 
     /**
