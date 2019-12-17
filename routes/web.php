@@ -59,6 +59,7 @@ Route::prefix('/teacher')
             Route::post('/exams/store','ExamController@store')->name('exams.store');
 
             Route::post('/question','QuestionController@store')->name('question.store');
+            Route::delete('/question/{exam_id}/{id}','QuestionController@destroy')->name('question.destroy');
 
         });
 

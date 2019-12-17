@@ -44,30 +44,39 @@ $(document).ready(function () {
 
 
     function addQuestion(base_url,exam_id) {
+
+        var question_data ={
+            exam_id: exam_id,
+            question_content: $('#question_content').val(),
+            option_A: $('#option_A').val(),
+            option_B: $('#option_B').val(),
+            option_C: $('#option_C').val(),
+            option_D: $('#option_D').val(),
+            option_E: $('#option_E').val(),
+            description : $('#description').val(),
+            right_options: $('#right_options').val(),
+        };
+
         $.ajax({
             url: base_url + "/teacher/question",
             method: 'post',
-            data: {
-                exam_id: exam_id,
-                question_content: $('#question_content').val(),
-                option_A: $('#option_A').val(),
-                option_B: $('#option_B').val(),
-                option_C: $('#option_C').val(),
-                option_D: $('#option_D').val(),
-                option_E: $('#option_E').val(),
-                description : $('#description').val(),
-                right_options: $('#right_options').val(),
-            },
+            data: question_data,
             success: function (result) {
-                console.log(result.success);
-                console.log(result.count);
+                if (result.success){
+                    console.log(result.success);
+                    console.log(result.count);
+                    listQuestions(result.exam_id,result.question_id,result.count,question_data);
 
-                $('#question_content').val('');
-                $('#answerContent').html('');
-                createOptionHtml(0,optDefaultCount,optionName);
-                $('#description').val('');
-                $('#right_options').val('');
-                $('#question_sort').html('<b># '+ (result.count+1) +'</b>')
+                    $('#question_content').val('');
+                    $('#answerContent').html('');
+                    createOptionHtml(0,optDefaultCount,optionName);
+                    $('#description').val('');
+                    $('#right_options').val('');
+                    $('#question_sort').html('<b># '+ (result.count+1) +'</b>')
+                }
+
+
+
             }
         })
     }
@@ -109,11 +118,127 @@ $(document).ready(function () {
         }
     }
 
-    function listQuestions() {
+    function listQuestions(exam_id,question_id,question_sort,data) {
+        var options=data.right_options.split('||');
+        var right_options ={
+            'option_A':  options.indexOf('option_A') > -1 ? 'right-answer' :'',
+            'option_B':  options.indexOf('option_B') > -1 ? 'right-answer' :'',
+            'option_C':  options.indexOf('option_C') > -1 ? 'right-answer' :'',
+            'option_D':  options.indexOf('option_D') > -1 ? 'right-answer' :'',
+            'option_E':  options.indexOf('option_E') > -1 ? 'right-answer' :'',
+        };
+        $('#questionList').append(' <div id="'+ question_id +'" class="question-list">\n' +
+            '        <div class="row">\n' +
+            '            <div class="col-md-2 col-sm-2">\n' +
+            '                <span id="sort"><b># '+ question_sort +'</b></span>\n' +
+            '            </div>\n' +
+            '            <div class="col-md-6 col-sm-6"></div>\n' +
+            '            <div class="col-md-4 col-sm-4 text-right">\n' +
+            '                <button class="btn btn-warning btn-sm" ><i class="material-icons">edit</i> DÜZENLE</button>\n' +
+            '                <button class="btn btn-just-icon btn-danger btn-sm" ><i class="material-icons"' +
+            '                 onclick="deleteQuestion('+ exam_id +','+ question_id +')">delete</i></button>\n' +
+            '                <button class="btn btn-just-icon btn-primary btn-sm" ><i class="material-icons">arrow_upward</i></button>\n' +
+            '                <button class="btn btn-just-icon btn-primary btn-sm" ><i class="material-icons">arrow_downward</i></button>\n' +
+            '            </div>\n' +
+            '        </div>\n' +
+            '        <div class="row">\n' +
+            '            <div class="col-md-8 col-sm-8 mt-3">\n' +
+            '                <span id="listing_question_content">'+ data.question_content +'</span>\n' +
+            '                <p><h4><b>CEVAP SEÇENEĞİ</b></h4></p>\n' +
+            '            </div>\n' +
+            '        </div>\n' +
+            '        <div class="row">\n' +
+            '            <div class="col-md-1 col-sm-1 list-answer-option text-center '+ right_options.option_A +'">\n' +
+            '                <span class="">A</span>\n' +
+            '            </div>\n' +
+            '            <div class="col-md-9 col-sm-9 list-answer '+ right_options.option_A +'">\n' +
+            '                <span id="option_list_A" class=" ">'+ data.option_A +'</span>\n' +
+            '            </div>\n' +
+            '        </div>\n' +
+            '        <div class="row">\n' +
+            '            <div class="col-md-1 col-sm-1 list-answer-option text-center '+ right_options.option_B +'">\n' +
+            '                <span class="">B</span>\n' +
+            '            </div>\n' +
+            '            <div class="col-md-9 col-sm-9 list-answer '+ right_options.option_B +'">\n' +
+            '                <span id="option_list_B" class="">'+ data.option_B +'</span>\n' +
+            '            </div>\n' +
+            '        </div>\n' +
+            '        <div class="row">\n' +
+            '            <div class="col-md-1 col-sm-1 list-answer-option text-center '+ right_options.option_C +'">\n' +
+            '                <span class="">C</span>\n' +
+            '            </div>\n' +
+            '            <div class="col-md-9 col-sm-9 list-answer '+ right_options.option_C +'">\n' +
+            '                <span id="option_list_C" class="">'+ data.option_C +'</span>\n' +
+            '            </div>\n' +
+            '        </div>\n' +
+            '        <div class="row">\n' +
+            '            <div class="col-md-1 col-sm-1 list-answer-option text-center '+ right_options.option_D +'">\n' +
+            '                <span class="">D</span>\n' +
+            '            </div>\n' +
+            '            <div class="col-md-9 col-sm-9 list-answer '+ right_options.option_D +'">\n' +
+            '                <span id="option_list_D" class="">'+ data.option_D +'</span>\n' +
+            '            </div>\n' +
+            '        </div>\n' +
+            '        <div class="row">\n' +
+            '            <div class="col-md-1 col-sm-1 list-answer-option text-center '+ right_options.option_E +'">\n' +
+            '                <span class="">E</span>\n' +
+            '            </div>\n' +
+            '            <div class="col-md-9 col-sm-9 list-answer '+ right_options.option_E +'">\n' +
+            '                <span id="option_list_E" class="">'+ data.option_E +'</span>\n' +
+            '            </div>\n' +
+            '        </div>\n' +
+            '        <div class="row">\n' +
+            '            <div class="col-md-9 col-sm-9 mt-2">\n' +
+            '                <span class=""><b>Açıklama: </b></span>\n' +
+            '                <span id="description" class="">'+ data.description +'</span>\n' +
+            '            </div>\n' +
+            '        </div>\n' +
+            '    </div>');
 
     }
 
+
+
 });
+
+function deleteQuestion(exam_id,question_id) {
+    $.ajaxSetup({
+        headers : {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    var base_url = window.location.origin;
+
+    $('#'+question_id).click(function (e) {
+        e.preventDefault();
+    });
+    Swal.fire({
+        title: 'Soruyu silmek istediğinden eminmisin?',
+        text: "Silinen soru bir daha geri getirilemez!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Evet, sil!',
+        cancelButtonText: 'İptal'
+    }).then((result) => {
+        if (result.value) {
+            $.ajax({
+                url: base_url + "/teacher/question/"+exam_id+"/"+question_id,
+                method: 'delete',
+                success: function (result) {
+                    if (result.success){
+                        console.log(result.success);
+                        console.log(result.exam_id);
+                        window.location.reload(true);
+                    }
+
+                }
+            })
+        }
+    })
+}
 
 function right_options(action,option) {
 

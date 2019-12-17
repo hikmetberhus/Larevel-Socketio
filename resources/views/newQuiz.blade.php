@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-10 mr-auto ml-auto">
                 <div class="card ">
-                    <form id="examInfoForm" name="examInfoForm"  method="post">
+                    <form id="examInfoForm" name="examInfoForm" >
                     <div class="card-header card-header-rose card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>

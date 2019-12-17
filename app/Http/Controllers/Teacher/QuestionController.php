@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Teacher;
 
+use Illuminate\Support\Facades\Auth;
+use App\Models\Exams\Exam;
 use App\Models\Exams\Question;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -52,8 +54,10 @@ class QuestionController extends Controller
 
         if($question->save()){
             return response()->json([
-                        'success'=>'Data is successfully added',
-                        'count'=> count($sort)+1
+                        'success'=> 'Data is successfully added',
+                        'count'=> count($sort)+1,
+                        'question_id'=> $question->id,
+                        'exam_id'=> $request->exam_id
                     ]);
         }
 
@@ -99,8 +103,30 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($exam_id,$id)
     {
-        //
+        $authentication = Exam::where('exam_id','=',$exam_id)->first();
+
+        if($authentication->teacher_id == Auth::user()->teacher_id){
+           $question = Question::where([
+                ['exam_id', '=', $exam_id],
+                ['question_id', '=', $id]
+            ])->first();
+           $questions = Question::where('exam_id',$exam_id)
+               ->where('sort','>',$question->sort)
+               ->get();
+           foreach ($questions as $row){
+               Question::where('question_id',$row->question_id)
+                   ->update(['sort' => $row->sort - 1]);
+           }
+           Question::where([
+               ['exam_id', '=', $exam_id],
+               ['question_id', '=', $id]
+           ])->delete();
+            return response()->json([
+                'success'=> 'Data is successfully deleted',
+                'exam_id'=> $exam_id
+            ],200);
+       }
     }
 }
