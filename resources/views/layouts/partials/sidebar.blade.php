@@ -51,19 +51,19 @@
                     <p> Aktivite başlat </p>
                 </a>
             </li>
-            <li class="nav-item  ">
+            <li class="nav-item  {{ Request::is('teacher/notification*') ? 'active': '' }} ">
                 <a class="nav-link" href="dashboard.html">
                     <i class="material-icons">add_alert</i>
                     <p> Duyuru yayınla </p>
                 </a>
             </li>
-            <li class="nav-item  ">
+            <li class="nav-item {{ Request::is('teacher/exams*') ? 'active': '' }}  ">
                 <a class="nav-link " href="{{ route('teacher.exams') }}">
                     <i class="material-icons">format_list_numbered</i>
                     <p> Sınavlar </p>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{ Request::is('teacher/classrooms*') ? 'active': '' }} ">
                 <a class="nav-link " href="dashboard.html">
                     <i class="material-icons">perm_contact_calendar</i>
                     <p> Sınıflar </p>
