@@ -57,28 +57,63 @@ $(document).ready(function () {
             right_options: $('#right_options').val(),
         };
 
-        $.ajax({
-            url: base_url + "/teacher/question",
-            method: 'post',
-            data: question_data,
-            success: function (result) {
-                if (result.success){
-                    console.log(result.success);
-                    console.log(result.count);
-                    listQuestions(result.exam_id,result.question_id,result.count,question_data);
+        if(question_data.question_content === ''){
+            Swal.fire({
+                icon: 'error',
+                title: 'Uyarı!',
+                text: 'Soru içeriği boş olamaz!',
+                confirmButtonText: 'Tamam',
 
-                    $('#question_content').val('');
-                    $('#answerContent').html('');
-                    createOptionHtml(0,optDefaultCount,optionName);
-                    $('#description').val('');
-                    $('#right_options').val('');
-                    $('#question_sort').html('<b># '+ (result.count+1) +'</b>')
+            })
+        }else if(question_data.option_A === '' ||
+                 question_data.option_B === '' ||
+                 question_data.option_C === '' ||
+                 question_data.option_D === '' ||
+                 question_data.option_E === ''){
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Uyarı!',
+                text: 'Cevap secenekleri boş olamaz!',
+                confirmButtonText: 'Tamam',
+
+            })
+        }else if(question_data.right_options === '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Uyarı!',
+                text: 'Sorunun en az bir doğru cevabı olmalıdır!',
+                confirmButtonText: 'Tamam',
+
+            })
+        }else{
+            $.ajax({
+                url: base_url + "/teacher/question",
+                method: 'post',
+                data: question_data,
+                success: function (result) {
+                    if (result.success){
+                        console.log(result.success);
+                        console.log(result.count);
+                        listQuestions(result.exam_id,result.question_id,result.count,question_data);
+
+                        $('#question_content').val('');
+                        $('#answerContent').html('');
+                        createOptionHtml(0,optDefaultCount,optionName);
+                        $('#description').val('');
+                        $('#right_options').val('');
+                        $('#question_sort').html('<b># '+ (result.count+1) +'</b>')
+                    }
+
+
+
                 }
+            })
+        }
 
 
 
-            }
-        })
+        /**/
     }
 
     function createOptionHtml(start=0,end=5,optionName) {
