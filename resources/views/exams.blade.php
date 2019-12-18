@@ -44,78 +44,18 @@
                                 </tr>
                                 </tfoot>
                                 <tbody>
+                                @foreach($exams as $index=>$exam)
                                     <tr class="text-center">
-                                        <td><a href="#"><u>vize1</u></a></td>
-                                        <td>50</td>
-                                        <td>11/11/1996</td>
+                                        <td><a href="{{ route('teacher.exams.new',$exam->exam_id) }}"><u>{{ $exam->exam_name }}</u></a></td>
+                                        <td>{{ $count[$index] }}</td>
+                                        <td>{{ $exam->created_at }}</td>
                                         <td>
                                             <a href="#" class="btn btn-link btn-info btn-just-icon like" rel="tooltip" data-placement="bottom" title="Sınavı kopyala"><i class="material-icons">filter_none</i></a>
                                             <a href="#" class="btn btn-link btn-warning btn-just-icon edit" rel="tooltip" data-placement="bottom" title="Sınavı indir"><i class="material-icons">cloud_download</i></a>
                                             <a href="#" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons" rel="tooltip" data-placement="bottom" title="Sınavı sil">delete</i></a>
                                         </td>
                                     </tr>
-                                    <tr class="text-center">
-                                        <td><a href="#"><u>vize1</u></a></td>
-                                        <td>50</td>
-                                        <td>11/11/1996</td>
-                                        <td>
-                                            <a href="#" class="btn btn-link btn-info btn-just-icon like" rel="tooltip" data-placement="bottom" title="Sınavı kopyala"><i class="material-icons">filter_none</i></a>
-                                            <a href="#" class="btn btn-link btn-warning btn-just-icon edit" rel="tooltip" data-placement="bottom" title="Sınavı indir"><i class="material-icons">cloud_download</i></a>
-                                            <a href="#" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons" rel="tooltip" data-placement="bottom" title="Sınavı sil">delete</i></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="text-center">
-                                        <td><a href="#"><u>vize1</u></a></td>
-                                        <td>50</td>
-                                        <td>11/11/1996</td>
-                                        <td>
-                                            <a href="#" class="btn btn-link btn-info btn-just-icon like" rel="tooltip" data-placement="bottom" title="Sınavı kopyala"><i class="material-icons">filter_none</i></a>
-                                            <a href="#" class="btn btn-link btn-warning btn-just-icon edit" rel="tooltip" data-placement="bottom" title="Sınavı indir"><i class="material-icons">cloud_download</i></a>
-                                            <a href="#" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons" rel="tooltip" data-placement="bottom" title="Sınavı sil">delete</i></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="text-center">
-                                        <td><a href="#"><u>vize1</u></a></td>
-                                        <td>50</td>
-                                        <td>11/11/1996</td>
-                                        <td>
-                                            <a href="#" class="btn btn-link btn-info btn-just-icon like" rel="tooltip" data-placement="bottom" title="Sınavı kopyala"><i class="material-icons">filter_none</i></a>
-                                            <a href="#" class="btn btn-link btn-warning btn-just-icon edit" rel="tooltip" data-placement="bottom" title="Sınavı indir"><i class="material-icons">cloud_download</i></a>
-                                            <a href="#" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons" rel="tooltip" data-placement="bottom" title="Sınavı sil">delete</i></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="text-center">
-                                        <td><a href="#"><u>vize1</u></a></td>
-                                        <td>50</td>
-                                        <td>11/11/1996</td>
-                                        <td>
-                                            <a href="#" class="btn btn-link btn-info btn-just-icon like" rel="tooltip" data-placement="bottom" title="Sınavı kopyala"><i class="material-icons">filter_none</i></a>
-                                            <a href="#" class="btn btn-link btn-warning btn-just-icon edit" rel="tooltip" data-placement="bottom" title="Sınavı indir"><i class="material-icons">cloud_download</i></a>
-                                            <a href="#" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons" rel="tooltip" data-placement="bottom" title="Sınavı sil">delete</i></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="text-center">
-                                        <td><a href="#"><u>vize1</u></a></td>
-                                        <td>50</td>
-                                        <td>11/11/1996</td>
-                                        <td>
-                                            <a href="#" class="btn btn-link btn-info btn-just-icon like" rel="tooltip" data-placement="bottom" title="Sınavı kopyala"><i class="material-icons">filter_none</i></a>
-                                            <a href="#" class="btn btn-link btn-warning btn-just-icon edit" rel="tooltip" data-placement="bottom" title="Sınavı indir"><i class="material-icons">cloud_download</i></a>
-                                            <a href="#" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons" rel="tooltip" data-placement="bottom" title="Sınavı sil">delete</i></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="text-center">
-                                        <td><a href="#"><u>vize1</u></a></td>
-                                        <td>50</td>
-                                        <td>11/11/1996</td>
-                                        <td>
-                                            <a href="#" class="btn btn-link btn-info btn-just-icon like" rel="tooltip" data-placement="bottom" title="Sınavı kopyala"><i class="material-icons">filter_none</i></a>
-                                            <a href="#" class="btn btn-link btn-warning btn-just-icon edit" rel="tooltip" data-placement="bottom" title="Sınavı indir"><i class="material-icons">cloud_download</i></a>
-                                            <a href="#" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons" rel="tooltip" data-placement="bottom" title="Sınavı sil">delete</i></a>
-                                        </td>
-                                    </tr>
-
-
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

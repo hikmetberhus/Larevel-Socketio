@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Models\Exams\Question;
+use phpDocumentor\Reflection\Types\Array_;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Exams\Exam;
@@ -19,7 +20,13 @@ class ExamController extends Controller
      */
     public function index()
     {
-        return view('exams');
+        $exams = Exam::where('teacher_id',Auth::user()->teacher_id)->get();
+        $count = array();
+        foreach ($exams as $exam){
+            array_push($count,Question::where('exam_id',$exam->exam_id)->count());
+        }
+
+        return view('exams',compact('exams','count'));
     }
 
     /**
