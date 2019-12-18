@@ -111,6 +111,17 @@ class ExamController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $authentication = Exam::where('exam_id','=',$id)->first();
+
+        if ($authentication->teacher_id == Auth::user()->teacher_id){
+
+            $res = Exam::where('exam_id',$id)->delete();
+
+            if ($res){
+                return response()->json([
+                    'success'=> 'Data is successfully deleted',
+                ],200);
+            }
+        }
     }
 }

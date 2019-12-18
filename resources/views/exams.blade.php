@@ -52,7 +52,7 @@
                                         <td>
                                             <a href="#" class="btn btn-link btn-info btn-just-icon like" rel="tooltip" data-placement="bottom" title="Sınavı kopyala"><i class="material-icons">filter_none</i></a>
                                             <a href="#" class="btn btn-link btn-warning btn-just-icon edit" rel="tooltip" data-placement="bottom" title="Sınavı indir"><i class="material-icons">cloud_download</i></a>
-                                            <a href="#" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons" rel="tooltip" data-placement="bottom" title="Sınavı sil">delete</i></a>
+                                            <button onclick="deleteExam({{ $exam->exam_id }})" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons" rel="tooltip" data-placement="bottom" title="Sınavı sil">delete</i></button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -71,6 +71,7 @@
 @endsection
 
 @section('footer')
+    <script type="text/javascript" src="{{ asset('js/exam.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('#datatables').DataTable({
