@@ -8,14 +8,14 @@
         <div class="row">
             <div class="col-md-10 mr-auto ml-auto">
                 <div class="card ">
-                    <form id="examInfoForm" name="examInfoForm" >
+                    <form id="examInfoForm" name="examInfoForm">
                     <div class="card-header card-header-rose card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons">assignment</i>
                         </div>
                         <h4 class="card-title">Sınav Oluşturun</h4>
                         <div class=" text-right">
-                            <button class="btn btn-warning" ><i class="material-icons">library_add</i> KAYDET ve ÇIK</button>
+                            <button id="saveAndQuitBtn" class="btn btn-warning"  ><i class="material-icons">library_add</i> KAYDET ve ÇIK</button>
                         </div>
                     </div>
                     <div class="card-body ">

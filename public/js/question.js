@@ -1,22 +1,21 @@
 $(document).ready(function () {
+
     const optionName  = ['A','B','C','D','E','F','G','H','I','J','K'];
     const optDefaultCount  = 5;
+    const base_url = window.location.origin;
 
     createOptionHtml(0,optDefaultCount,optionName);
+
+    $.ajaxSetup({
+        headers : {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
     $('#submitQuestion').click(function (e) {
         e.preventDefault();
 
-        var base_url = window.location.origin;
         var exam_id = $('#exam_id').val();
-
-
-
-        $.ajaxSetup({
-            headers : {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
 
         if(exam_id === ""){
             console.log('null değer ');
@@ -28,7 +27,7 @@ $(document).ready(function () {
                     request_type: 'ajax'
                 },
                 success: function (result) {
-                    console.log(result.success);
+                    //console.log(result.success);
                     exam_id = result.exam_id;
                     $('#exam_id').val(exam_id);
                     addQuestion(base_url,exam_id);
@@ -93,8 +92,8 @@ $(document).ready(function () {
                 data: question_data,
                 success: function (result) {
                     if (result.success){
-                        console.log(result.success);
-                        console.log(result.count);
+                        //console.log(result.success);
+                        //console.log(result.count);
                         listQuestions(result.exam_id,result.question_id,result.count,question_data);
 
                         $('#question_content').val('');
@@ -232,9 +231,27 @@ $(document).ready(function () {
 
     }
 
+    $('#saveAndQuitBtn').click(function (e) {
+        e.preventDefault();
 
+        $.ajax({
+            url: base_url + "/teacher/exams/store",
+            method: 'post',
+            data:{
+                exam_name: $('#exam_name').val(),
+                request_type: 'ajax'
+            },
+            success: function (result) {
+                if (result.success){
+                    window.location.href = base_url+"/teacher/exams";
+                }
+
+            }
+        })
+    });
 
 });
+
 
 function deleteQuestion(exam_id,question_id) {
     $.ajaxSetup({
