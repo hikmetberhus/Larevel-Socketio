@@ -57,6 +57,7 @@ Route::prefix('/teacher')
             Route::get('/exams','ExamController@index')->name('exams');
             Route::get('/exams/new/{id?}','ExamController@create')->name('exams.new');
             Route::post('/exams/store','ExamController@store')->name('exams.store');
+            Route::post('/exams/edit/{id}','ExamController@edit')->name('exams.edit');
             Route::delete('/exams/destroy/{id}','ExamController@destroy')->name('exams.destroy');
 
             Route::post('/question','QuestionController@store')->name('question.store');

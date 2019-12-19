@@ -234,20 +234,39 @@ $(document).ready(function () {
     $('#saveAndQuitBtn').click(function (e) {
         e.preventDefault();
 
-        $.ajax({
-            url: base_url + "/teacher/exams/store",
-            method: 'post',
-            data:{
-                exam_name: $('#exam_name').val(),
-                request_type: 'ajax'
-            },
-            success: function (result) {
-                if (result.success){
-                    window.location.href = base_url+"/teacher/exams";
-                }
+        var exam_id = $('#exam_id').val();
 
-            }
-        })
+        if (exam_id === '') {
+            $.ajax({
+                url: base_url + "/teacher/exams/store",
+                method: 'post',
+                data:{
+                    exam_name: $('#exam_name').val(),
+                    request_type: 'ajax'
+                },
+                success: function (result) {
+                    if (result.success){
+                        window.location.href = base_url+"/teacher/exams";
+                    }
+                }
+            })
+        }else{
+            $.ajax({
+                url: base_url + "/teacher/exams/edit/"+exam_id,
+                method: 'post',
+                data:{
+                    exam_name: $('#exam_name').val(),
+                    request_type: 'ajax'
+                },
+                success: function (result) {
+                    if (result.success){
+                        console.log(result.success);
+                        window.location.href = base_url+"/teacher/exams";
+                    }
+                }
+            })
+        }
+
     });
 
 });

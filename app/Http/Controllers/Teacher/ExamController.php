@@ -39,11 +39,14 @@ class ExamController extends Controller
         if ($exam_id != null){
             $questions = Question::where('exam_id','=',$exam_id)->get();
             $sort =count($questions) + 1;
+            $exam_name = Exam::where('exam_id',$exam_id)->first();
+            $exam_name = $exam_name->exam_name;
         }else{
             $sort = 1;
             $questions = null;
+            $exam_name = 'İsimsiz sınav';
         }
-        return view('newQuiz',compact('exam_id','sort','questions'));
+        return view('newQuiz',compact('exam_name','exam_id','sort','questions'));
     }
 
     /**
@@ -64,9 +67,6 @@ class ExamController extends Controller
                 'exam_id'=> $exam->id
             ],200);
         }
-
-
-
     }
 
     /**
@@ -88,7 +88,20 @@ class ExamController extends Controller
      */
     public function edit($id)
     {
-        //
+        $exam = Exam::where('exam_id',$id)->first();
+
+        if ($exam->exam_name != request()->exam_name){
+            Exam::where('exam_id',$id)->update(['exam_name' => request()->exam_name]);
+            return response()->json([
+                'success'=>'Exam successfully updated.',
+            ],200);
+        }else{
+            return response()->json([
+                'success'=>'Exam successfully redirect.',
+                'count'=> $exam
+            ],200);
+        }
+
     }
 
     /**

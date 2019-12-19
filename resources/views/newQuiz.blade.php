@@ -24,7 +24,7 @@
                             <div class="col-md-10 mt-5 mr-auto ml-auto">
                                 <div class="form-group bmd-form-group">
                                     <label for="quizName" class="bmd-label-floating">Sınav adı</label>
-                                    <input type="text" class="form-control" name="exam_name" id="exam_name" value="İsimsiz Sınav">
+                                    <input type="text" class="form-control" name="exam_name" id="exam_name" value="{{ $exam_name }}">
                                     <input type="hidden" name="exam_id" id="exam_id" value="{{ $exam_id }}">
                                 </div>
                             </div>
