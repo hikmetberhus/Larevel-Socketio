@@ -54,7 +54,7 @@ $(document).ready(function () {
             },
             inputValidator: (value) => {
                 if (!value) {
-                    return 'Sınav adı girmediniz!'
+                    return 'Sınıf adı boş bırakılamaz!'
                 }
             },
             showCancelButton: true,
@@ -87,17 +87,54 @@ $(document).ready(function () {
 
 });
 
+function editRoom(room_id = null) {
+
+    if (room_id !== null){
+
+        var base_url = window.location.origin;
+        var room_name = $('#room-'+room_id).text();
+
+        Swal.fire({
+            title: 'Sınıfı düzenle:',
+            input: 'text',
+            inputValue: room_name,
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            inputValidator: (value) => {
+                if (!value) {
+                    return 'Sınıf adı boş bırakılamaz!'
+                }
+            },
+            showCancelButton: true,
+            showCloseButton: true,
+            confirmButtonText: 'Güncelle',
+            cancelButtonText: 'İptal',
+            showLoaderOnConfirm: true,
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+            if (result.value  !== room_name) {
+                $.ajax({
+                    url: base_url + "/teacher/rooms/update/"+room_id,
+                    method: 'post',
+                    data: result,
+                    success: function (result) {
+                        if (result.success){
+                            window.location.reload(true);
+                        }
+                    }
+                }).fail(function (error) {
+                    Swal.showValidationMessage(
+                        `Bir hata oluştu: ${error}`
+                    )
+                })
+            }
+        })
+
+    }
+}
+
 function deleteRoom(room_id = null) {
-
-    $('#'+room_id).click(function (e) {
-        e.preventDefault();
-    });
-
-    $.ajaxSetup({
-        headers : {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
 
     if (room_id !== null) {
 
@@ -108,6 +145,7 @@ function deleteRoom(room_id = null) {
             text: "Silinen sınıf bir daha geri getirilemez!",
             icon: 'warning',
             showCancelButton: true,
+            showCloseButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
             confirmButtonText: 'Evet, sil!',

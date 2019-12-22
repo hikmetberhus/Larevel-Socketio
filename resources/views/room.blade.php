@@ -50,13 +50,14 @@
                                     <tr class="text-center">
                                         <td>{{ $room->room_id }}</td>
                                         <td>
-                                            <a href="{{ route('teacher.exams.new',$room->room_id) }}"><u>{{ $room->room_name }}</u></a>
-                                            <p class="small">{{ $room->is_default == 1 ? '(Varsayılan Sınıf)' : '' }}</p>
+                                            <a id="room-{{ $room->room_id }}" href="{{ route('teacher.exams.new',$room->room_id) }}"><u>{{ $room->room_name }}</u></a>
+                                            <p class="small">{{ $room->is_default == 1 ? '(Aktif Sınıf)' : '' }}</p>
                                         </td>
                                         <td>0</td>
                                         <td>{{ $room->created_at }}</td>
                                         <td>
-                                            <button id="{{ $room->room_id }}" onclick="deleteRoom('{{ $room->room_id }}')" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons" rel="tooltip" data-placement="bottom" title="Sınıfı sil">delete</i></button>
+                                            <button id="{{ $room->room_id }}" onclick="editRoom('{{ $room->room_id }}')" class="btn btn-link btn-success btn-just-icon "><i class="material-icons" rel="tooltip" data-placement="bottom" title="Sınıfı düzenle">create</i></button>
+                                            <button id="{{ $room->room_id }}" onclick="deleteRoom('{{ $room->room_id }}')" class="btn btn-link btn-danger btn-just-icon "><i class="material-icons" rel="tooltip" data-placement="bottom" title="Sınıfı sil">delete</i></button>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -84,7 +84,14 @@ class RoomController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $room = Room::where('room_id',$id)->first();
+
+        if ($room->room_name != $request->value){
+            Room::where('room_id',$id)->update(['room_name'=> $request->value]);
+            return response()->json([
+                'success'=>'Exam successfully updated.',
+            ],200);
+        }
     }
 
     /**
