@@ -54,15 +54,20 @@ Route::prefix('/teacher')
 
     Route::middleware('auth:teacher')->group(function () {
 
+            /*-------------- Exam Routes --------------------*/
             Route::get('/exams','ExamController@index')->name('exams');
             Route::get('/exams/new/{id?}','ExamController@create')->name('exams.new');
             Route::post('/exams/store','ExamController@store')->name('exams.store');
             Route::post('/exams/edit/{id}','ExamController@edit')->name('exams.edit');
             Route::delete('/exams/destroy/{id}','ExamController@destroy')->name('exams.destroy');
 
+            /*-------------- Question Routes --------------------*/
             Route::post('/question','QuestionController@store')->name('question.store');
             Route::delete('/question/{exam_id}/{id}','QuestionController@destroy')->name('question.destroy');
 
+            /*-------------- Classroom Routes --------------------*/
+            Route::get('/rooms','RoomController@index')->name('rooms');
+            Route::post('/rooms/store','RoomController@store')->name('rooms.store');
         });
 
 

@@ -63,8 +63,8 @@
                     <p> Sınavlar </p>
                 </a>
             </li>
-            <li class="nav-item {{ Request::is('teacher/classrooms*') ? 'active': '' }} ">
-                <a class="nav-link " href="dashboard.html">
+            <li class="nav-item {{ Request::is('teacher/rooms*') ? 'active': '' }} ">
+                <a class="nav-link " href="{{ route('teacher.rooms') }}">
                     <i class="material-icons">perm_contact_calendar</i>
                     <p> Sınıflar </p>
                 </a>
