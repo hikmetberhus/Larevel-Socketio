@@ -95,6 +95,21 @@ class RoomController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $authentication = Room::where('room_id',$id)->first();
+
+        if ($authentication->teacher_id == Auth::user()->teacher_id){
+
+            if ($authentication->is_default == 1){
+                return response()->json([
+                    'success'=> 'error',
+                    'message'=> 'Varsayılan sınıf silinemez!'
+                ],200);
+
+            }else if (Room::where('room_id',$id)->delete()){
+                return response()->json([
+                    'success'=> 'Data is successfully deleted',
+                ],200);
+            }
+        }
     }
 }

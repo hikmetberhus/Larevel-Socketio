@@ -49,11 +49,14 @@
                                 @foreach($rooms as $index=>$room)
                                     <tr class="text-center">
                                         <td>{{ $room->room_id }}</td>
-                                        <td><a href="{{ route('teacher.exams.new',$room->room_id) }}"><u>{{ $room->room_name }}</u></a></td>
+                                        <td>
+                                            <a href="{{ route('teacher.exams.new',$room->room_id) }}"><u>{{ $room->room_name }}</u></a>
+                                            <p class="small">{{ $room->is_default == 1 ? '(Varsayılan Sınıf)' : '' }}</p>
+                                        </td>
                                         <td>0</td>
                                         <td>{{ $room->created_at }}</td>
                                         <td>
-                                            <button onclick="deleteExam({{ $room->room_id }})" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons" rel="tooltip" data-placement="bottom" title="Sınıfı sil">delete</i></button>
+                                            <button id="{{ $room->room_id }}" onclick="deleteRoom('{{ $room->room_id }}')" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons" rel="tooltip" data-placement="bottom" title="Sınıfı sil">delete</i></button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -73,41 +76,5 @@
 
 @section('footer')
     <script type="text/javascript" src="{{ asset('js/room.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $('#datatables').DataTable({
-                "pagingType": "full_numbers",
-                "lengthMenu": [
-                    [10, 25, 50, -1],
-                    [10, 25, 50, "All"]
-                ],
-                responsive: true,
-                language: {
-                    search: "_INPUT_",
-                    searchPlaceholder: "Sınıf ara...",
-                }
-            });
 
-            var table = $('#datatable').DataTable();
-
-            // Edit record
-            table.on('click', '.edit', function() {
-                $tr = $(this).closest('tr');
-                var data = table.row($tr).data();
-                alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
-            });
-
-            // Delete a record
-            table.on('click', '.remove', function(e) {
-                $tr = $(this).closest('tr');
-                table.row($tr).remove().draw();
-                e.preventDefault();
-            });
-
-            //Like record
-            table.on('click', '.like', function() {
-                alert('You clicked on Like button');
-            });
-        });
-    </script>
 @endsection
