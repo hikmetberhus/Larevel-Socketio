@@ -19,4 +19,16 @@ class Room extends Model
     {
         return Room::where('teacher_id',$this->teacher_id)->count() == 0 ? 1 : 0;
     }
+
+    public static function getRooms()
+    {
+        return Room::where('teacher_id',Auth::user()->teacher_id)->get();
+    }
+
+    public static function getActiveRoom()
+    {
+        return Room::where('teacher_id',Auth::user()->teacher_id)
+            ->where('is_default',1)
+            ->firstOrFail();
+    }
 }

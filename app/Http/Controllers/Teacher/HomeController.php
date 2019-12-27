@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers\Teacher;
 
+use App\Models\Room;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
+
+
     /**
-     * Only Authenticated users for "admin" guard 
+     * Only Authenticated users for "teacher" guard
      * are allowed.
      * 
      * @return void
@@ -23,7 +27,8 @@ class HomeController extends Controller
      * 
      * @return \Illuminate\Http\Response
      */
-    public function index(){
+    public function index()
+    {
         return view('dashboard');
     }
 }

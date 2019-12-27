@@ -17,7 +17,7 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $rooms = Room::where('teacher_id',Auth::user()->teacher_id)->get();
+        $rooms = Room::getRooms();
 
         return view('room',compact('rooms'));
     }
@@ -115,6 +115,28 @@ class RoomController extends Controller
             }else if (Room::where('room_id',$id)->delete()){
                 return response()->json([
                     'success'=> 'Data is successfully deleted',
+                ],200);
+            }
+        }
+    }
+
+    public function replaceIsDefault($id)
+    {
+        $authentication = Room::where('room_id',$id)->first();
+
+        if ($authentication->teacher_id == Auth::user()->teacher_id){
+
+            if ($authentication->is_default == 1){
+                return response()->json([
+                    'success'=> 'error',
+                    'message'=> 'Zaten varsayılan sınıf !'
+                ],200);
+
+            }else{
+                Room::where('is_default',1)->update(['is_default'=> 0]);
+                Room::where('room_id',$id)->update(['is_default'=> 1]);
+                return response()->json([
+                    'success'=> 'Data is successfully updated.',
                 ],200);
             }
         }

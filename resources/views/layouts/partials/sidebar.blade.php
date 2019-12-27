@@ -16,7 +16,7 @@
         <div class="user">
             <div class="user-info">
                 <a data-toggle="collapse" href="#collapseExample" class="username">
-                    <span><i class="fa fa-users" style="padding-right: 10px;color: #666;margin-left: 15px"></i> SINIF KODU<b class="caret"></b></span>
+                    <span><i class="fa fa-users" style="padding-right: 10px;color: #666;margin-left: 15px"></i>{{ App\Models\Room::getActiveRoom()->room_name }}<b class="caret"></b></span>
                 </a>
                 <div class="collapse" id="collapseExample">
                     <ul class="nav">
@@ -27,7 +27,8 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="#" id="{{ App\Models\Room::getActiveRoom()->room_id }}"
+                               onclick="deleteRoom('{{ App\Models\Room::getActiveRoom()->room_name}}')">
                                 <span class="sidebar-mini"><i class="material-icons">delete</i> </span>
                                 <span class="sidebar-normal"> Sınıfı sil </span>
                             </a>

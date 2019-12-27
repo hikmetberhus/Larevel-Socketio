@@ -69,6 +69,7 @@ Route::prefix('/teacher')
             Route::get('/rooms','RoomController@index')->name('rooms');
             Route::post('/rooms/store','RoomController@store')->name('rooms.store');
             Route::post('/rooms/update/{id}','RoomController@update')->name('rooms.update');
+            Route::post('/rooms/replaceIsDefault/{id}','RoomController@replaceIsDefault')->name('rooms.update.isDefault');
             Route::delete('/rooms/destroy/{id}','RoomController@destroy')->name('rooms.destroy');
         });
 

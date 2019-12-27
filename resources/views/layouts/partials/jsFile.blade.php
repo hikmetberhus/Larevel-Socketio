@@ -42,6 +42,8 @@
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="{{ asset('assets/demo/demo.js') }}"></script>
 
+<script src="{{ asset('js/dashboard/main.js') }}"></script>
+
 <script>
     $(document).ready(function() {
         $().ready(function() {
@@ -211,6 +213,7 @@
 
             });
         });
+
     });
 </script>
 <!-- Sharrre libray -->
@@ -225,4 +228,7 @@
         md.initVectorMap();
 
     });
+
+
 </script>
+

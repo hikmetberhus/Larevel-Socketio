@@ -7,6 +7,7 @@ use phpDocumentor\Reflection\Types\Array_;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Exams\Exam;
+use App\Models\Room;
 use Illuminate\Support\Facades\Auth;
 
 class ExamController extends Controller

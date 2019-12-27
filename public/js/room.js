@@ -85,6 +85,7 @@ $(document).ready(function () {
     });
 
 
+
 });
 
 function editRoom(room_id = null) {
@@ -136,6 +137,10 @@ function editRoom(room_id = null) {
 
 function deleteRoom(room_id = null) {
 
+    $('#'+room_id).click(function (e) {
+        e.preventDefault();
+    });
+
     if (room_id !== null) {
 
         var base_url = window.location.origin;
@@ -172,3 +177,4 @@ function deleteRoom(room_id = null) {
         })
     }
 }
+
