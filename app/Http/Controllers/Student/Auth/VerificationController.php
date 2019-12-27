@@ -14,7 +14,7 @@ class VerificationController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:teacher');
+        $this->middleware('auth:student');
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify','resend');
     }
@@ -27,10 +27,10 @@ class VerificationController extends Controller
      */
     public function show(Request $request)
     {
-        return $request->user('teacher')->hasVerifiedEmail()
-            ? redirect()->route('teacher.home')
+        return $request->user('student')->hasVerifiedEmail()
+            ? redirect()->route('student.home')
             : view('auth.verify',[
-                'resendRoute' => 'teacher.verification.resend',
+                'resendRoute' => 'student.verification.resend',
             ]);
     }
 
@@ -42,22 +42,22 @@ class VerificationController extends Controller
      */
     public function verify(Request $request)
     {
-        if ($request->route('id') != $request->user('teacher')->getKey()) {
+        if ($request->route('id') != $request->user('student')->getKey()) {
             //id value doesn't match.
             return redirect()
-                ->route('teacher.verification.notice')
+                ->route('student.verification.notice')
                 ->with('error','Invalid user!');
         }
 
-        if ($request->user('teacher')->hasVerifiedEmail()) {
+        if ($request->user('student')->hasVerifiedEmail()) {
             return redirect()
-                ->route('teacher.home');
+                ->route('student.home');
         }
 
-        $request->user('teacher')->markEmailAsVerified();
+        $request->user('student')->markEmailAsVerified();
 
         return redirect()
-            ->route('teacher.home')
+            ->route('student.home')
             ->with('status','Thank you for verifying your email!');
     }
 
@@ -69,11 +69,11 @@ class VerificationController extends Controller
      */
     public function resend(Request $request)
     {
-        if ($request->user('teacher')->hasVerifiedEmail()) {
-            return redirect()->route('teacher.home');
+        if ($request->user('student')->hasVerifiedEmail()) {
+            return redirect()->route('student.home');
         }
 
-        $request->user('teacher')->sendEmailVerificationNotification();
+        $request->user('student')->sendEmailVerificationNotification();
 
         return redirect()
             ->back()

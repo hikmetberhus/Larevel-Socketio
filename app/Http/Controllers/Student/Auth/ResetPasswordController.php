@@ -31,7 +31,7 @@ class ResetPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:teacher');
+        $this->middleware('guest:student');
     }
 
     /**
@@ -42,7 +42,7 @@ class ResetPasswordController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function showResetForm(Request $request, $token = null){
-        return view('auth.teacher.passwords.reset');
+        return view('auth.student.passwords.reset');
     }
 
     /**
@@ -51,7 +51,7 @@ class ResetPasswordController extends Controller
      * @return \Illuminate\Contracts\Auth\PasswordBroker
      */
     protected function broker(){
-        return Password::broker('teachers');
+        return Password::broker('students');
     }
 
     /**
@@ -60,6 +60,6 @@ class ResetPasswordController extends Controller
      * @return \Illuminate\Contracts\Auth\StatefulGuard
      */
     protected function guard(){
-        return Auth::guard('teacher');
+        return Auth::guard('student');
     }
 }

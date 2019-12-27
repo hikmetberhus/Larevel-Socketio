@@ -18,14 +18,14 @@
 <body class="">
 
 <div class="wrapper ">
+    <!-- Navbar -->
+@include('student.layouts.partials.navbar')
+<!-- End Navbar -->
     <div class="main-panel">
-        <!-- Navbar -->
-        @include('student.layouts.partials.navbar')
-        <!-- End Navbar -->
+
         <div class="content">
             @yield('content')
         </div>
-        @include('student.layouts.partials.footer')
     </div>
 </div>
 

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+<nav class="navbar navbar-expand-lg navbar-toggle navbar-absolute fixed-top  ">
     <div class="container-fluid">
         <div class="navbar-wrapper">
             <div class="navbar-minimize">
@@ -13,25 +13,28 @@
         <div class="collapse navbar-collapse justify-content-end">
 
             <ul class="navbar-nav">
-
+                <li class="nav-item">
+                    <a class="nav-link" href="#pablo">
+                        <i class="material-icons">dashboard</i>
+                        <p class="d-lg-none d-md-block">
+                            Stats
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="http://example.com/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="btn btn-primary btn-link  small">Aktif sınıfı deiğiştir</span>
-
+                        <i class="material-icons">notifications</i>
+                        <span class="notification">5</span>
                         <p class="d-lg-none d-md-block">
                             Some Actions
                         </p>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-
-                            <a class="dropdown-item" id="" href="#" onclick="replaceDefaultRoom('')">
-
-                                <i class="material-icons ml-2">
-
-                                </i>
-                            </a>
-
-
+                        <a class="dropdown-item" href="#">Mike John responded to your email</a>
+                        <a class="dropdown-item" href="#">You have 5 new tasks</a>
+                        <a class="dropdown-item" href="#">You're now friend with Andrew</a>
+                        <a class="dropdown-item" href="#">Another Notification</a>
+                        <a class="dropdown-item" href="#">Another One</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -42,10 +45,7 @@
                         </p>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                        <a class="dropdown-item" href="#">Profil</a>
-                        <a class="dropdown-item" href="#">Hesap ayarları</a>
-                        <div class="dropdown-divider"></div>
-                        <form id="logoutForm" action="{{ route('teacher.logout') }}" method="post" style="display: none">
+                        <form id="logoutForm" action="{{ route('student.logout') }}" method="post" style="display: none">
                             {{ csrf_field() }}
                         </form>
                         <a href="#" onclick="event.preventDefault();document.getElementById('logoutForm').submit();" class="dropdown-item" >Güvenli çıkış</a>

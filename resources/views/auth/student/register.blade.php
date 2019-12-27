@@ -39,9 +39,12 @@
             <div class="row">
                 <div class="col-md-8 ml-auto mr-auto">
                     <div class="card card-signup">
-                        <form class="form" method="" action="#" id="RegisterValidation">
+                        <form class="form" method="post" action="{{ route('student.register') }}" id="RegisterValidation">
+                            {{ csrf_field() }}
                             <h3 class="card-title text-center mt-5">senEdu</h3>
                             <h2 class="card-title text-center ">Yeni Öğrenci Hesabı</h2>
+
+                            @include ('layouts.partials.errors')
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-5 ml-auto mr-auto">
@@ -59,7 +62,7 @@
                                             <input type="email" id="email" class="form-control" name="email" required>
                                         </div>
                                         <div class="form-group ">
-                                            <select class="selectpicker"  data-style="select-with-transition" title="">
+                                            <select class="selectpicker" name="education"  data-style="select-with-transition" title="">
                                                 <option disabled selected>--- Üniversite ---</option>
                                                 <option value="Abant İzzet Baysal Üniversitesi">Abant İzzet Baysal Üniversitesi</option>
                                                 <option value="Abdullah Gül Üniversitesi">Abdullah Gül Üniversitesi</option>
@@ -267,7 +270,7 @@
                                                 <span class="form-check-sign">
                                                      <span class="check"></span>
                                                 </span>
-                                                <a href="#something">Üyelik sözleşmesi</a>ni okudum ve kabul ediyorum.
+                                                <a href="#">Üyelik sözleşmesi</a>ni okudum ve kabul ediyorum.
                                             </label>
                                         </div>
                                         <div class="text-center mb-5">

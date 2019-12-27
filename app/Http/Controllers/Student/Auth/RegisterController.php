@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Student\Auth;
 
-use App\Models\Teacher;
+use App\Models\Student;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -32,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/teacher/login';
+    protected $redirectTo = '/student/login';
 
     /**
      * Create a new controller instance.
@@ -41,12 +41,12 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:teacher');
+        $this->middleware('guest:student');
     }
 
     public function showRegistrationForm()
     {
-        return view('auth.teacher.register');
+        return view('auth.student.register');
     }
 
     /**
@@ -60,10 +60,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:50'],
             'surname' => ['required', 'string', 'max:50'],
-            'city' => ['required'],
-            'organization_type' => ['required'],
             'education' => ['required','string'],
-            'mission' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
@@ -77,13 +74,10 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return Teacher::create([
+        return Student::create([
             'name' => $data['name'],
             'surname' => $data['surname'],
-            'city' => $data['city'],
-            'organization_type' => $data['organization_type'],
             'education' => $data['education'],
-            'mission' => $data['mission'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'remember_token' => NULL
