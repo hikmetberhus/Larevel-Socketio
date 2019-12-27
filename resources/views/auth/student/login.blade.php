@@ -37,7 +37,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-8 ml-auto mr-auto">
-                    <form class="form" method="" action="#">
+                    <form class="form" method="post" action="{{ route('student.login') }}">
+                        {{ csrf_field() }}
                         <div class="card card-login card-hidden">
                             <div class="card-header card-header-rose text-center">
                                 <h3 class="card-title">senEdu</h3>
@@ -53,7 +54,7 @@
                                           <i class="material-icons">email</i>
                                         </span>
                                       </div>
-                                      <input type="email" class="form-control" placeholder="Email...">
+                                      <input type="email" name="email" class="form-control" placeholder="Email..." value="{{ old('email') }}" >
                                     </div>
                                   </span>
                                 <span class="bmd-form-group">
@@ -63,14 +64,16 @@
                                           <i class="material-icons">lock_outline</i>
                                         </span>
                                       </div>
-                                      <input type="password" class="form-control" placeholder="Şifre...">
+                                      <input type="password" name="password" class="form-control" placeholder="Şifre...">
+                                        <input class="form-check-input" style="display: none;" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                                     </div>
                                 </span>
                             </div>
                             <div class="card-footer justify-content-center">
-                                <a href="#pablo" class="btn btn-rose btn-link btn-lg">Giriş yap</a>
+                                <button type="submit" class="btn btn-rose btn-link btn-lg">Giriş yap</button>
                             </div>
                             <hr>
+                            @include ('layouts.partials.errors')
                             <div class="card-footer justify-content-around">
                                 <p><a href="{{ route('student.password.request') }}">Şifremi unuttum</a></p>
                                 <p><a href="{{ route('student.register') }}" >Hesap oluştur</a></p>
