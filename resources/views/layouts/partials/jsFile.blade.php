@@ -7,7 +7,7 @@
 <!-- Plugin for the momentJs  -->
 <script src="{{ asset('assets/js/plugins/moment.min.js') }}"></script>
 <!--  Plugin for Sweet Alert -->
-<script src="{{ asset('assets/js/plugins/sweetalert2.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <!-- Forms Validations Plugin -->
 <script src="{{ asset('assets/js/plugins/jquery.validate.min.js') }}"></script>
 <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->

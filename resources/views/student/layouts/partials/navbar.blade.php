@@ -1,24 +1,17 @@
 <nav class="navbar navbar-expand-lg navbar-toggle navbar-absolute fixed-top  ">
     <div class="container-fluid">
-        <div class="navbar-wrapper">
-            <div class="navbar-minimize">
-                <button id="minimizeSidebar" class="btn btn-just-icon btn-white btn-fab btn-round">
-                    <i class="material-icons text_align-center visible-on-sidebar-regular">more_vert</i>
-                    <i class="material-icons design_bullet-list-67 visible-on-sidebar-mini">view_list</i>
-                </button>
-            </div>
-            <a class="navbar-brand" href="#">Aktif sınıf kodu: <b></b></a>
+        <div class="navbar-wrapper ml-5">
+
+            <h4><b>SenEdu</b></h4>
         </div>
 
         <div class="collapse navbar-collapse justify-content-end">
 
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#pablo">
-                        <i class="material-icons">dashboard</i>
-                        <p class="d-lg-none d-md-block">
-                            Stats
-                        </p>
+                    <a class="nav-link " id="addClassroomBtn" href="#">
+                        sınıf ekle
+                        <i class="material-icons" >add</i>
                     </a>
                 </li>
                 <li class="nav-item dropdown">

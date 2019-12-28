@@ -65,7 +65,7 @@ Route::prefix('/teacher')
             Route::post('/question','QuestionController@store')->name('question.store');
             Route::delete('/question/{exam_id}/{id}','QuestionController@destroy')->name('question.destroy');
 
-            /*-------------- Classroom Routes --------------------*/
+            /*-------------- Room Routes --------------------*/
             Route::get('/rooms','RoomController@index')->name('rooms');
             Route::post('/rooms/store','RoomController@store')->name('rooms.store');
             Route::post('/rooms/update/{id}','RoomController@update')->name('rooms.update');
@@ -116,4 +116,8 @@ Route::prefix('/student')
         });
 
         Route::get('','HomeController@index')->name('home');
+
+        Route::middleware('auth:student')->group(function (){
+            Route::post('/classrooms/store','ClassroomController@store')->name('classroom.store');
+        });
 });

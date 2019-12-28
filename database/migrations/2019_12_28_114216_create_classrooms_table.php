@@ -13,17 +13,19 @@ class CreateClassroomsTable extends Migration
      */
     public function up()
     {
-        Schema::create('rooms', function (Blueprint $table) {
-            $table->string('room_id',8)->primary();
-            $table->unsignedInteger('teacher_id');
-            $table->string('room_name',30);
-            $table->boolean('is_default')->default(0);
-            $table->foreign('teacher_id')
-                ->references('teacher_id')
-                ->on('teachers')
+        Schema::create('classrooms', function (Blueprint $table) {
+            $table->unsignedInteger('student_id');
+            $table->foreign('student_id')
+                ->references('student_id')
+                ->on('students')
                 ->onDeletes('cascade')
                 ->onUpdate('cascade');
-            $table->timestamps();
+            $table->string('room_id');
+            $table->foreign('room_id')
+                ->references('room_id')
+                ->on('rooms')
+                ->onDeletes('cascade')
+                ->onUpdate('cascade');
         });
     }
 

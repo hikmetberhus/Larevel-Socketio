@@ -25,10 +25,14 @@ class Room extends Model
         return Room::where('teacher_id',Auth::user()->teacher_id)->get();
     }
 
+    /**
+     * @return mixed
+     */
     public static function getActiveRoom()
     {
         return Room::where('teacher_id',Auth::user()->teacher_id)
-            ->where('is_default',1)
-            ->firstOrFail();
+                ->where('is_default',1)
+                ->first();
+
     }
 }
