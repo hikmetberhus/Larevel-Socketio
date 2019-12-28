@@ -9,6 +9,7 @@ class Room extends Model
 {
     protected $guarded = [];
 
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
@@ -35,4 +36,6 @@ class Room extends Model
                 ->first();
 
     }
+
+
 }

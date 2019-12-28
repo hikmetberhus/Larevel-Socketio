@@ -15,16 +15,18 @@
 
 </head>
 
-<body class="">
+<body class="sidebar-mini">
 
 <div class="wrapper ">
     <!-- Navbar -->
-@include('student.layouts.partials.navbar')
-<!-- End Navbar -->
-    <div class="main-panel">
+    @include('student.layouts.partials.navbar')
+    <!-- End Navbar -->
 
-        <div class="content">
-            @yield('content')
+    <div class="main-panel" >
+        <div class="content " style="">
+            <div class="container-fluid">
+                @yield('content')
+            </div>
         </div>
     </div>
 </div>

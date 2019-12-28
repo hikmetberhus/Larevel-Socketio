@@ -129,7 +129,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                                 <h5 class="mb-3">Hızlı Giriş yap</h5>
 
-                                <a href="" class="btn btn-outline-danger btn-lg btn-block">Öğrenci girişi </a>
+                                <a href="{{ route('student.login') }}" class="btn btn-outline-danger btn-lg btn-block">Öğrenci girişi </a>
                                 <a href="{{ route('teacher.login') }}" class="btn btn-outline-success btn-lg btn-block">Öğrentmen girişi </a>
                                 <hr >
                                 <h5>Hesabın yokmu? </h5>
@@ -558,7 +558,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             showConfirmButton: false,
             focus: false,
             html:
-                '<p><a href="" class="btn btn-link btn-lg">Öğrenci hesabı oluştur > </a></p><br>' +
+                '<p><a href="{{ route("student.register") }}" class="btn btn-link btn-lg">Öğrenci hesabı oluştur > </a></p><br>' +
                 '<p><a href="{{ route("teacher.register") }}" class="btn btn-link btn-lg">Öğretmen hesabı oluştur > </a></p>'
         })
     }

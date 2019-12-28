@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -60,4 +61,9 @@ class Teacher extends Authenticatable implements MustVerifyEmail
     {
         $this->notify(new TeacherEmailVerificationNotification);
     }
+
+    /*public function room()
+    {
+        return $this->hasMany(Room::class,'teacher_id');
+    }*/
 }

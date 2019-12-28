@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Student;
 
+use App\Models\Classroom;
+use App\Models\Room;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -26,7 +30,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('student.dashboard');
+        $classrooms = Classroom::where('student_id',Auth::user()->student_id)->get();
+
+        $teacher_name = array();
+        $rooms = array();
+
+        foreach ($classrooms as $classroom){
+
+            $room = Room::where('room_id',$classroom->room_id)->first();
+            $teacher = Teacher::find($room->teacher_id);
+            array_push($teacher_name,$teacher->name.' '.$teacher->surname);
+            array_push($rooms,$room);
+        }
+        return view('student.dashboard',compact('classrooms','rooms','teacher_name'));
     }
 
     /**
