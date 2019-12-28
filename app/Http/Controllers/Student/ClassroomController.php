@@ -101,6 +101,14 @@ class ClassroomController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Classroom::where('student_id',Auth::user()->student_id)
+            ->where('room_id',$id)
+            ->delete();
+
+        return response()->json([
+            'success'=> 'Data is successfully deleted',
+        ],200);
+
+
     }
 }

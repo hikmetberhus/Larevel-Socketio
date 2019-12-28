@@ -119,5 +119,6 @@ Route::prefix('/student')
 
         Route::middleware('auth:student')->group(function (){
             Route::post('/classrooms/store','ClassroomController@store')->name('classroom.store');
+            Route::delete('/classrooms/destroy/{id}','ClassroomController@destroy')->name('classroom.destroy');
         });
 });

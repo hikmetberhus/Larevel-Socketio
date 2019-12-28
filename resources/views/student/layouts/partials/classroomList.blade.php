@@ -20,7 +20,7 @@
                     <div class="stats">
                         <i class="material-icons">access_time</i> Yakın zamanda sınav yok.
                     </div>
-                    <button type="button" class="btn btn-danger btn-link " rel="tooltip" data-placement="bottom" title="" data-original-title="Sınıftan ayrıl">
+                    <button id="exitBtn-{{ $rooms[$index]->room_id }}" type="button" onclick="exitToClassroom('{{ $rooms[$index]->room_id }}')" class="btn btn-danger btn-link " rel="tooltip" data-placement="bottom" title="" data-original-title="Sınıftan ayrıl">
                         <i class="material-icons " style="font-size: 20px;" >exit_to_app</i>
                     </button>
                 </div>
