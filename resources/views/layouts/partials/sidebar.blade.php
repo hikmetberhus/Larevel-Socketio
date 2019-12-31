@@ -53,7 +53,7 @@
                 </a>
             </li>
             <li class="nav-item  {{ Request::is('teacher/notification*') ? 'active': '' }} ">
-                <a class="nav-link" href="dashboard.html">
+                <a class="nav-link" href="{{ route('teacher.notifications') }}">
                     <i class="material-icons">add_alert</i>
                     <p> Duyuru yayınla </p>
                 </a>
