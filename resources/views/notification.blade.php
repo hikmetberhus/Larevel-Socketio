@@ -2,6 +2,9 @@
 
 @section('title','senEdu | Bildirimler')
 
+@section('head')
+    <script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
+@endsection
 
 @section('content')
     <div class="container-fluid">
@@ -21,6 +24,7 @@
 
                         </div>
                         <form action="" method="">
+
                             <div class="row justify-content-start">
                                 <label for="subject" class="col-md-3 col-form-label"><b>Konu:</b></label>
                                 <div class="col-md-7">
@@ -54,7 +58,7 @@
 
                                 <div class="col-md-7">
                                     <div class="">
-                                        <button class="btn  btn-round btn-outline-primary col-md-5">Yayınla</button>
+                                        <button id="broadCastBtn" class="btn  btn-round btn-outline-primary col-md-5">Yayınla</button>
                                     </div>
                                 </div>
                             </div>
@@ -104,18 +108,17 @@
                                 </tr>
                                 </tfoot>
                                 <tbody>
-                                {{--@foreach($exams as $index=>$exam)
+                                @foreach($notifications as $notification)
                                     <tr class="text-center">
-                                        <td><a href="{{ route('teacher.exams.new',$exam->exam_id) }}"><u>{{ $exam->exam_name }}</u></a></td>
-                                        <td>{{ $count[$index] }}</td>
-                                        <td>{{ $exam->created_at }}</td>
+                                        <td>{{ $notification->subject }}</td>
+                                        <td>{{ $notification->content }}</td>
+                                        <td>{{ $notification->created_at }}</td>
                                         <td>
-                                            <a href="#" class="btn btn-link btn-info btn-just-icon like" rel="tooltip" data-placement="bottom" title="Sınavı kopyala"><i class="material-icons">filter_none</i></a>
-                                            <a href="#" class="btn btn-link btn-warning btn-just-icon edit" rel="tooltip" data-placement="bottom" title="Sınavı indir"><i class="material-icons">cloud_download</i></a>
-                                            <button onclick="deleteExam({{ $exam->exam_id }})" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons" rel="tooltip" data-placement="bottom" title="Sınavı sil">delete</i></button>
+                                            <a href="#" class="btn btn-link btn-warning btn-just-icon edit" rel="tooltip" data-placement="bottom" title="Görüntüle"><i class="material-icons">remove_red_eye</i></a>
+                                            <button id="{{ $notification->notification_id }}" onclick="deleteNotification({{ $notification->notification_id }})" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons" rel="tooltip" data-placement="bottom" title="Duyuruyu Sil">delete</i></button>
                                         </td>
                                     </tr>
-                                @endforeach--}}
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -131,6 +134,101 @@
 @endsection
 
 @section('footer')
+    <script>
+        var socket = io.connect('http://localhost:8890');
+        socket.on('notification', function (data) {
+            /*data = jQuery.parseJSON(data);
+            alert('sdfdsfdsfd');
+            console.log();
+            console.log(data.content);*/
+            console.log(data.name);
+        });
+        $("#broadCastBtn").click(function(e){
+            e.preventDefault();
+            $.ajaxSetup({
+                headers : {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            var subject = $("#subject").val();
+            var content = $("#content").val();
+            var rooms = $('#selectRoom').val();
+            if(subject === '' || content === '' ||  rooms == ''){
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Lütfent tüm alanları doldurun!',
+                    text: 'Yayınlanacak sınıfı seçmeyi unutmayın.',
+                    confirmButtonText: 'Tamam'
+                })
+            }else{
+                $.ajax({
+                    type: "POST",
+                    url: window.location.origin+'/teacher/notifications/store',
+                    data: {
+                        subject: subject,
+                        notificationContent: content,
+                        rooms: rooms
+                    },
+                    success:function(data){
+                        console.log(data);
+                        //window.location.reload(true);
+                    }
+                });
+            }
+        })
+
+        function deleteNotification(notification_id = null)
+        {
+            $('#'+notification_id).click(function (e) {
+                e.preventDefault();
+
+
+            });
+
+            if (notification_id !== null)
+            {
+                $.ajaxSetup({
+                    headers : {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                var base_url = window.location.origin;
+
+                Swal.fire({
+                    title: 'Duyuruyu silmek istediğinden eminmisin?',
+                    text: "Silinen duyuru bir daha geri getirilemez!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    showCloseButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Evet, sil!',
+                    cancelButtonText: 'İptal'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: base_url + "/teacher/notifications/destroy/"+notification_id,
+                            method: 'delete',
+                            success: function (result) {
+                                if (result.success === 'error'){
+                                    Swal.fire(
+                                        'Hata!',
+                                        result.message,
+                                        'warning',
+                                    )
+                                }else{
+                                    console.log(result.success);
+                                    window.location.reload(true);
+                                }
+                            }
+                        })
+                    }
+                })
+            }
+        }
+    </script>
     <script>
         $(document)
             .one('focus.autoExpand', 'textarea.autoExpand', function(){

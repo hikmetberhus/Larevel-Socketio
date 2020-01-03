@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Teacher;
 
+use App\Models\Notification;
+use App\Models\NotificationBroadcast;
 use App\Models\Room;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Redis;
 
 class NotificationController extends Controller
 {
@@ -16,7 +20,8 @@ class NotificationController extends Controller
     public function index()
     {
         $rooms = Room::getRooms();
-        return view('notification',compact('rooms'));
+        $notifications = Notification::where('teacher_id',Auth::user()->teacher_id)->get();
+        return view('notification',compact('rooms','notifications'));
     }
 
     /**
@@ -37,7 +42,36 @@ class NotificationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $notification = new Notification;
+        $notification->teacher_id = Auth::user()->teacher_id;
+        $notification->subject = $request->subject;
+        $notification->content = $request->notificationContent;
+
+
+        if ($notification->save())
+        {
+            foreach ($request->rooms as $room)
+            {
+                $notification_broadcast = new NotificationBroadcast;
+                $notification_broadcast->notification_id = $notification->id;
+                $notification_broadcast->room_id = $room;
+                $notification_broadcast->save();
+            }
+            $data = [
+              'subject'=> $request->subject,
+              'content'=> $request->notificationContent,
+              'name'=> Auth::user()->name
+            ];
+
+            $redis = Redis::connection();
+            $redis->publish('notification',json_encode($data));
+            return response()->json([
+                'success'=> 'Data is successfully added.',
+                'data'=> $request->rooms
+            ],200);
+
+        }
+
     }
 
     /**
@@ -82,6 +116,16 @@ class NotificationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $authentication = Notification::where('notification_id',$id)->first();
+
+        if ($authentication->teacher_id == Auth::user()->teacher_id)
+        {
+            if (Notification::where('notification_id',$id)->delete())
+            {
+                return response()->json([
+                    'success'=> 'Data is successfully deleted',
+                ],200);
+            }
+        }
     }
 }

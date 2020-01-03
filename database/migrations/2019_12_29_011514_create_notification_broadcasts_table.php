@@ -18,13 +18,13 @@ class CreateNotificationBroadcastsTable extends Migration
             $table->foreign('notification_id')
                 ->references('notification_id')
                 ->on('notifications')
-                ->onDeletes('cascade')
+                ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->string('room_id',8);
             $table->foreign('room_id')
                 ->references('room_id')
                 ->on('rooms')
-                ->onDeletes('cascade')
+                ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->timestamps();
 

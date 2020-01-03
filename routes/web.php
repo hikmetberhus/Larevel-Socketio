@@ -74,6 +74,10 @@ Route::prefix('/teacher')
 
         /*-------------- Room Routes --------------------*/
         Route::get('/notifications','NotificationController@index')->name('notifications');
+
+        /*-------------- Notification Routes --------------------*/
+        Route::post('/notifications/store','NotificationController@store')->name('notification.store');
+        Route::delete('/notifications/destroy/{id}','NotificationController@destroy')->name('notification.destroy');
     });
 
 
@@ -121,7 +125,11 @@ Route::prefix('/student')
         Route::get('','HomeController@index')->name('home');
 
         Route::middleware('auth:student')->group(function (){
+
+            /*-------------- Classroom Routes --------------------*/
             Route::post('/classrooms/store','ClassroomController@store')->name('classroom.store');
             Route::delete('/classrooms/destroy/{id}','ClassroomController@destroy')->name('classroom.destroy');
+
+
         });
 });

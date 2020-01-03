@@ -18,13 +18,13 @@ class CreateClassroomsTable extends Migration
             $table->foreign('student_id')
                 ->references('student_id')
                 ->on('students')
-                ->onDeletes('cascade')
+                ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->string('room_id');
             $table->foreign('room_id')
                 ->references('room_id')
                 ->on('rooms')
-                ->onDeletes('cascade')
+                ->onDelete('cascade')
                 ->onUpdate('cascade');
         });
     }

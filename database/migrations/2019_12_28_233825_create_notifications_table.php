@@ -19,7 +19,7 @@ class CreateNotificationsTable extends Migration
             $table->foreign('teacher_id')
                 ->references('teacher_id')
                 ->on('teachers')
-                ->onDeletes('cascade')
+                ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->string('subject');
             $table->text('content');

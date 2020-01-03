@@ -20,7 +20,7 @@ class CreateExamsTable extends Migration
             $table->foreign('teacher_id')
                 ->references('teacher_id')
                 ->on('teachers')
-                ->onDeletes('cascade')
+                ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->timestamps();
         });
