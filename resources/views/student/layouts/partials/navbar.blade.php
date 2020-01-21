@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="navbar-wrapper ml-5">
 
-            <h4><b>SenEdu</b></h4>
+            <h4><b><a href="{{ route('student.home') }}">SenEdu</a> </b></h4>
         </div>
 
         <div class="collapse navbar-collapse justify-content-end">

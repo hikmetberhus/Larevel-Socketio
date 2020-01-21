@@ -13,6 +13,14 @@
 
     @yield('head')
 
+    <style>
+        .student-panel{
+            padding-top: 100px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+
 </head>
 
 <body class="sidebar-mini">
@@ -22,12 +30,14 @@
     @include('student.layouts.partials.navbar')
     <!-- End Navbar -->
 
-    <div class="main-panel" >
+    <div class="student-panel" >
         <div class="content " style="">
             <div class="container-fluid">
                 @yield('content')
             </div>
         </div>
+
+        @yield('questionNumberBar')
     </div>
 </div>
 

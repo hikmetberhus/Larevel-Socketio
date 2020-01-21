@@ -131,9 +131,13 @@ Route::prefix('/student')
         Route::middleware('auth:student')->group(function (){
 
             /*-------------- Classroom Routes --------------------*/
+            Route::get('/classrooms/{id}','ClassroomController@show')->name('classroom.show');
             Route::post('/classrooms/store','ClassroomController@store')->name('classroom.store');
             Route::delete('/classrooms/destroy/{id}','ClassroomController@destroy')->name('classroom.destroy');
 
 
+
         });
+
+        Route::get('','HomeController@index')->name('home');
 });

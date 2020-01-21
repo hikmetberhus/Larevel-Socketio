@@ -13,7 +13,7 @@
                     <h4> {{ $teacher_name[$index] }}</h4>
                 </div>
                 <div class="card-body">
-                    <h4 class="card-title"><a href="#"><b>Sınıfa git</b></a> </h4>
+                    <h4 class="card-title"><a href="{{ route('student.classroom.show',$rooms[$index]->room_id) }}"><b>Sınıfa git</b></a> </h4>
                     <p class="card-category">Devam eden aktivite: <b>Yok</b></p>
                 </div>
                 <div class="card-footer">
