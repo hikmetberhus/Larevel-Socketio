@@ -46,8 +46,8 @@
                     <p> Canlı sonuçlar </p>
                 </a>
             </li>
-            <li class="nav-item  ">
-                <a class="nav-link" href="dashboard.html">
+            <li class="nav-item  {{ Request::is('teacher/activityStart*') ? 'active': '' }} ">
+                <a class="nav-link" href="{{ route('teacher.activityStart') }}">
                     <i class="material-icons">play_circle_outline</i>
                     <p> Aktivite başlat </p>
                 </a>

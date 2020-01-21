@@ -78,6 +78,10 @@ Route::prefix('/teacher')
         /*-------------- Notification Routes --------------------*/
         Route::post('/notifications/store','NotificationController@store')->name('notification.store');
         Route::delete('/notifications/destroy/{id}','NotificationController@destroy')->name('notification.destroy');
+
+        /*-------------- ActivityStart Routes --------------------*/
+        Route::get('/activityStart','ActivityStartController@index')->name('activityStart');
+
     });
 
 
