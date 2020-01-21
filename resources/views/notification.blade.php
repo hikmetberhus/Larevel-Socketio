@@ -2,10 +2,6 @@
 
 @section('title','senEdu | Bildirimler')
 
-@section('head')
-    <script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
-@endsection
-
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -134,15 +130,9 @@
 @endsection
 
 @section('footer')
+    <script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
     <script>
-        var socket = io.connect('http://localhost:8890');
-        socket.on('notification', function (data) {
-            /*data = jQuery.parseJSON(data);
-            alert('sdfdsfdsfd');
-            console.log();
-            console.log(data.content);*/
-            console.log(data.name);
-        });
+
         $("#broadCastBtn").click(function(e){
             e.preventDefault();
             $.ajaxSetup({
@@ -154,6 +144,7 @@
             var subject = $("#subject").val();
             var content = $("#content").val();
             var rooms = $('#selectRoom').val();
+
             if(subject === '' || content === '' ||  rooms == ''){
                 Swal.fire({
                     icon: 'warning',
@@ -170,20 +161,26 @@
                         notificationContent: content,
                         rooms: rooms
                     },
-                    success:function(data){
-                        console.log(data);
-                        //window.location.reload(true);
+                    success:function(result){
+                        var socket = io.connect('http://localhost:3000/notification');
+                        var data =JSON.parse(result.data);
+
+                        for (var i = 0 ;i < data.length ;i++){
+                            socket.emit('joinRoom', data[i] );
+                        }
+
+                        setTimeout(function(){
+                            window.location.reload(true);
+                        }, 1000);
                     }
                 });
             }
-        })
+        });
 
         function deleteNotification(notification_id = null)
         {
             $('#'+notification_id).click(function (e) {
                 e.preventDefault();
-
-
             });
 
             if (notification_id !== null)
@@ -228,6 +225,7 @@
                 })
             }
         }
+
     </script>
     <script>
         $(document)

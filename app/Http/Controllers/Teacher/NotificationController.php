@@ -8,7 +8,8 @@ use App\Models\Room;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Redis;
+
+
 
 class NotificationController extends Controller
 {
@@ -50,24 +51,31 @@ class NotificationController extends Controller
 
         if ($notification->save())
         {
+            $response_data = array();
+
             foreach ($request->rooms as $room)
             {
                 $notification_broadcast = new NotificationBroadcast;
                 $notification_broadcast->notification_id = $notification->id;
                 $notification_broadcast->room_id = $room;
                 $notification_broadcast->save();
-            }
-            $data = [
-              'subject'=> $request->subject,
-              'content'=> $request->notificationContent,
-              'name'=> Auth::user()->name
-            ];
 
-            $redis = Redis::connection();
-            $redis->publish('notification',json_encode($data));
+                $data = [
+                    'room_id'=> $room,
+                    'notification_id' => $notification->id,
+                    'content' => $notification->content,
+                    'subject'=> $notification->subject,
+                    'teacher_name'=> Auth::user()->name,
+                    'teacher_surname' => Auth::user()->surname,
+                    'created_at' => $notification_broadcast->created_at
+                ];
+
+                array_push($response_data,$data);
+            }
+
             return response()->json([
                 'success'=> 'Data is successfully added.',
-                'data'=> $request->rooms
+                'data'=> json_encode($response_data)
             ],200);
 
         }

@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Student;
 
 use App\Models\Classroom;
+use App\Models\Notification;
+use App\Models\NotificationBroadcast;
 use App\Models\Room;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -32,6 +35,7 @@ class HomeController extends Controller
     {
         $classrooms = Classroom::where('student_id',Auth::user()->student_id)->get();
 
+        $notification_broadcast = array();
         $teacher_name = array();
         $rooms = array();
 
@@ -39,10 +43,30 @@ class HomeController extends Controller
 
             $room = Room::where('room_id',$classroom->room_id)->first();
             $teacher = Teacher::find($room->teacher_id);
+            $notifications = NotificationBroadcast::where('room_id',$room->room_id)->get();
+            foreach ($notifications as $key=>$notification){
+                $req = Notification::where('notification_id',$notification->notification_id)->first();
+                $data_object = [
+                    'room_id' => $notification->room_id,
+                    'notification_id' => $notification->notification_id,
+                    'content' => $req->content,
+                    'subject' => $req->subject,
+                    'teacher_name' =>  $teacher->name,
+                    'teacher_surname' => $teacher->surname,
+                    'created_at' => $req->created_at
+                ];
+                array_push($notification_broadcast, $data_object);
+            }
             array_push($teacher_name,$teacher->name.' '.$teacher->surname);
             array_push($rooms,$room);
         }
-        return view('student.dashboard',compact('classrooms','rooms','teacher_name'));
+
+        return view('student.dashboard',compact(
+                            'classrooms',
+                            'rooms',
+                            'teacher_name',
+                            'notification_broadcast')
+                            );
     }
 
     /**

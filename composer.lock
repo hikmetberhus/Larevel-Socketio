@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3a5b071f3101a6bd235f55091100fcd9",
+    "content-hash": "fed43a54a1a053e24aca3178323a024a",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -754,6 +754,51 @@
             "time": "2019-03-30T13:22:34+00:00"
         },
         {
+            "name": "marcuscampos/laravel-socket",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/marcus-campos/laravel-socket.git",
+                "reference": "20debfe46b89f8122ab983054f6c95865be1241a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/marcus-campos/laravel-socket/zipball/20debfe46b89f8122ab983054f6c95865be1241a",
+                "reference": "20debfe46b89f8122ab983054f6c95865be1241a",
+                "shasum": ""
+            },
+            "require": {
+                "wisembly/elephant.io": "^3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MarcusCampos\\LaravelSocket\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marcus Vinícius Campos",
+                    "email": "campos.v.marcus@gmail.com"
+                }
+            ],
+            "description": "Socket gun based on Elephant.io for Laravel",
+            "homepage": "https://github.com/marcus-campos/laravel-socket",
+            "keywords": [
+                "Socket",
+                "elephant",
+                "io",
+                "laravel",
+                "react"
+            ],
+            "abandoned": true,
+            "time": "2017-01-10T17:03:08+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "1.24.0",
             "source": {
@@ -830,6 +875,50 @@
                 "psr-3"
             ],
             "time": "2018-11-05T09:00:11+00:00"
+        },
+        {
+            "name": "moura137/laravel-elephantio",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/moura137/LaravelElephantIO.git",
+                "reference": "a895935162ceeec100c45fc0fcca88e57eaecbb0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/moura137/LaravelElephantIO/zipball/a895935162ceeec100c45fc0fcca88e57eaecbb0",
+                "reference": "a895935162ceeec100c45fc0fcca88e57eaecbb0",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "~5.0",
+                "php": ">=5.4.0",
+                "wisembly/elephant.io": "~3.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.7.2",
+                "phpunit/phpunit": "4.0.*",
+                "satooshi/php-coveralls": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Moura137": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "ElephantIO Service Provider for the Laravel PHP Framework",
+            "homepage": "https://github.com/moura137/LaravelElephantIO",
+            "keywords": [
+                "Socket.io",
+                "elephant.io",
+                "laravel",
+                "php"
+            ],
+            "time": "2017-11-16T13:35:24+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -2743,6 +2832,72 @@
                 "environment"
             ],
             "time": "2019-03-06T09:39:45+00:00"
+        },
+        {
+            "name": "wisembly/elephant.io",
+            "version": "v3.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Wisembly/elephant.io.git",
+                "reference": "9d56f409fe231a906af87005f83a135565632d3f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Wisembly/elephant.io/zipball/9d56f409fe231a906af87005f83a135565632d3f",
+                "reference": "9d56f409fe231a906af87005f83a135565632d3f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "psr/log": "~1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ElephantIO\\": [
+                        "src/",
+                        "test/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Baptiste Clavié",
+                    "email": "baptiste@wisembly.com",
+                    "homepage": "http://baptiste.xn--clavi-fsa.net/",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Guillaume Potier",
+                    "email": "guillaume@wisembly.com",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Ludovic Barreca",
+                    "email": "ludogp2@gmail.com",
+                    "role": "Project Founder"
+                },
+                {
+                    "name": "Elephant.IO Community",
+                    "role": "Contributors :)"
+                }
+            ],
+            "description": "Send events to a websocket real time engine though PHP",
+            "homepage": "http://elephant.io",
+            "keywords": [
+                "dialog",
+                "nodejs",
+                "real time",
+                "websocket"
+            ],
+            "time": "2017-09-10T20:38:38+00:00"
         }
     ],
     "packages-dev": [

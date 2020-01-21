@@ -130,7 +130,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <h5 class="mb-3">Hızlı Giriş yap</h5>
 
                                 <a href="{{ route('student.login') }}" class="btn btn-outline-danger btn-lg btn-block">Öğrenci girişi </a>
-                                <a href="{{ route('teacher.login') }}" class="btn btn-outline-success btn-lg btn-block">Öğrentmen girişi </a>
+                                <a href="{{ route('teacher.login') }}" class="btn btn-outline-success btn-lg btn-block">Öğretmen girişi </a>
                                 <hr >
                                 <h5>Hesabın yokmu? </h5>
                                 <button onclick="showSwal();"  class="btn btn-primary btn-lg btn-block" style="margin-top: 20px;">Hesap oluştur >> </button>
