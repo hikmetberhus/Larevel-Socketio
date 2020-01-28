@@ -217,7 +217,7 @@
     });
 </script>
 <!-- Sharrre libray -->
-<script src="{{ asset('assets/demo/jquery.sharrre.js') }}"></script>
+<script src="{{ asset('assets/demo/jquery.share.js') }}"></script>
 
 
 <script>

@@ -62,6 +62,7 @@ Route::prefix('/teacher')
         Route::delete('/exams/destroy/{id}','ExamController@destroy')->name('exams.destroy');
 
         /*-------------- Question Routes --------------------*/
+        Route::get('/question/{exam_id}','QuestionController@getQuestions')->name('question.getQuestions');
         Route::post('/question','QuestionController@store')->name('question.store');
         Route::delete('/question/{exam_id}/{id}','QuestionController@destroy')->name('question.destroy');
 

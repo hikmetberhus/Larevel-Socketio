@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Models\Exams\Question;
-use phpDocumentor\Reflection\Types\Array_;
+use App\Models\TempQuestionAnswer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Exams\Exam;
@@ -137,5 +137,59 @@ class ExamController extends Controller
                 ],200);
             }
         }
+    }
+
+    public function saveTempAnswer(Request $request)
+    {
+        $answer_exists = TempQuestionAnswer::where('exam_broadcast_id',$request->exam_broadcast_id)
+            ->where('student_id',$request->student_id)
+            ->where('question_id',$request->question_id)
+            ->get();
+
+        if($answer_exists->count() == 0)
+        {
+            $temp_question_answer = new TempQuestionAnswer;
+            $temp_question_answer->exam_broadcast_id = $request->exam_broadcast_id;
+            $temp_question_answer->student_id = $request->student_id;
+            $temp_question_answer->question_id = $request->question_id;
+            $temp_question_answer->answer_given = $request->answer_given;
+
+            if($temp_question_answer->save())
+            {
+                return response()->json([
+                    'success' => 'Data is successfully added.',
+                ],200);
+            }
+        }else{
+            TempQuestionAnswer::where('exam_broadcast_id',$request->exam_broadcast_id)
+                ->where('student_id',$request->student_id)
+                ->where('question_id',$request->question_id)
+                ->update(['answer_given'=> $request->answer_given]);
+
+            return response()->json([
+                'success' => 'Data is successfully updated.',
+            ],200);
+        }
+
+    }
+
+    public function getTempAnswer($exam_broadcast_id, $student_id)
+    {
+        $temp_answers = TempQuestionAnswer::where('exam_broadcast_id',$exam_broadcast_id)
+            ->where('student_id',$student_id)
+            ->get();
+
+        if($temp_answers->count() != 0)
+        {
+            return response()->json([
+                'success' => 'OK',
+                'data' => $temp_answers
+            ],200);
+        }
+
+        return response()->json([
+            'success' => 'OK',
+            'data' => null
+        ],200);
     }
 }

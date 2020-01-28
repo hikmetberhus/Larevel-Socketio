@@ -10,7 +10,7 @@
 
 @section('footer')
     <script type="text/javascript" src="{{ asset('js/student/dashboard.js') }}" ></script>
-    <script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
+            <script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
     <script>
 
         const socket = io.connect('http://localhost:3000/notification');

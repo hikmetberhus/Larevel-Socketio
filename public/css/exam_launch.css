@@ -1,13 +1,17 @@
-.footer{
-    box-shadow: 0 4px 18px 5px rgba(0,0,0,.12), 0 7px 10px -5px rgba(0,0,0,.15) ;
-    background-color: #f2f2f2;
+.footer-hide{
+    display: none;
 }
-.question-number-item{
+.content-hide{
+    display: none;
+}
+
+.question-number-bar li{
     margin-top: 5px;
+    margin-left: 5px;
 }
 .sk-folding-cube {
     margin-top: 30px;
-    margin-left: auto;
+    margin-left: 100px;
     margin-right: auto;
     width: 40px;
     height: 40px;
@@ -101,7 +105,7 @@
 }
 
 .css-loader{
-    display: none;
+
 }
 
 .option-checkbox{
@@ -116,6 +120,7 @@
     font-weight: bold;
     margin-left: 20px;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 .option-content{
@@ -142,6 +147,7 @@
     font-weight: bold;
     margin-left: 20px;
     cursor: pointer;
+    border-radius: 5px;
 }
 .option-content-selected{
     font-size: medium;
@@ -156,6 +162,4 @@
     position: absolute;
     margin-top: 200px;
     color: #666;
-
-
 }

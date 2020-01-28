@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+Route::get('/getTempAnswers/{exam_broadcast_id}/{student_id}','Teacher\ExamController@getTempAnswer');
+Route::post('/saveTempAnswer','Teacher\ExamController@saveTempAnswer');

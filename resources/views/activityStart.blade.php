@@ -8,7 +8,7 @@
             <!--      Wizard container        -->
             <div class="wizard-container">
                 <div class="card card-wizard active" data-color="rose" id="wizardProfile">
-                    <form action="#" method="">
+                    <form name="activityStartForm" action="#" method="">
                         <!--        You can switch " data-color="primary" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
                         <div class="card-header text-center">
                             <h3 class="card-title">
@@ -89,7 +89,7 @@
                                             <div class="togglebutton">
                                                 <h6>Anında geri bildirim</h6>
                                                 <label>
-                                                    <input type="checkbox" >
+                                                    <input type="checkbox" id="configRealtimeFeedback" name="configRealtimeFeedback" value="1" >
                                                     <span class="toggle"></span>
                                                     <b>Anında geri bildirim, her soru sonunda sorunun puan değerini gösterir.</b>
                                                 </label>
@@ -98,7 +98,7 @@
                                             <div class="togglebutton">
                                                 <h6>Gezintiyi Açın</h6>
                                                 <label>
-                                                    <input type="checkbox" >
+                                                    <input type="checkbox" id="configOpenNavigation" name="configOpenNavigation" value="1">
                                                     <span class="toggle"></span>
                                                     <b>Gezinti, sınav esnasında öğrencinin sorular arasında geçiş yapmasını sağlar.</b>
                                                 </label>
@@ -107,7 +107,7 @@
                                             <div class="togglebutton">
                                                 <h6>Son Puanı Göster</h6>
                                                 <label>
-                                                    <input type="checkbox" >
+                                                    <input type="checkbox" id="configLastFeedback" name="configLastFeedback" value="1">
                                                     <span class="toggle"></span>
                                                     <b>Sınav sonunda öğrenciye notunu gösterir.</b>
                                                 </label>
@@ -123,7 +123,7 @@
                             </div>
                             <div class="ml-auto">
                                 <input type="button" class="btn btn-next btn-fill btn-rose btn-wd" name="next" value="Sonraki">
-                                <input type="button" class="btn btn-finish btn-fill btn-rose btn-wd" name="finish" value="Sınavı başlat" style="display: none;">
+                                <input type="button" onclick="activityStart()" class="btn btn-finish btn-fill btn-rose btn-wd" name="finish" value="Sınavı başlat" style="display: none;">
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -136,6 +136,51 @@
 @endsection
 
 @section('footer')
+    <script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
+    <script>
+        function activityStart() {
+
+            var base_url = window.location.origin;
+
+            var exam_id = $("input[name='select_exam']:radio:checked").val();
+            var configRealtimeFeedback = $("#configRealtimeFeedback:checkbox:checked").val();
+            var configOpenNavigation = $("#configOpenNavigation:checkbox:checked").val();
+            var configLastFeedback = $("#configLastFeedback:checkbox:checked").val();
+
+            $.ajaxSetup({
+                headers : {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                url: base_url+"/teacher/question/"+exam_id ,
+                method: 'get',
+                success: function (result) {
+                    if (result.success){
+                        var socket = io.connect('http://localhost:3000/exam');
+                        var obj = {
+                                room_id: result.room_id,
+                                exam_broadcast_id : result.exam_broadcast_id,
+                                data: result.data
+                            };
+
+
+                        socket.emit('examStart',obj);
+                        socket.on('examStartConfirmed', (data) => {
+
+                            if(data.room_id === result.exam_broadcast_id+result.room_id)
+                            {
+                                console.log('sınav başladı.');
+                            }
+                        });
+
+
+                    }
+                }
+            });
+        }
+    </script>
     <script>
         $(document).ready(function() {
             // Initialise the wizard
@@ -149,7 +194,6 @@
             $("input[name='finish']").val('Sınavı Başlat');*/
         });
     </script>
-
     <script>
         $(document).ready(function() {
             $('#datatables').DataTable({

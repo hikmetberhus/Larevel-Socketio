@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Teacher;
 
+use App\Models\ExamBroadcast;
+use App\Models\Room;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Exams\Exam;
 use App\Models\Exams\Question;
@@ -69,9 +71,41 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function getQuestions($exam_id)
     {
+        $authentication = Exam::where('exam_id',$exam_id)->first();
 
+        if ($authentication->teacher_id == Auth::user()->teacher_id)
+        {
+            $exam_broadcast = new ExamBroadcast;
+            $exam_broadcast->teacher_id = Auth::user()->teacher_id;
+            $exam_broadcast->exam_source = $exam_id;
+
+            if($exam_broadcast->save()){
+                $questions = Question::where('exam_id',$exam_id)->get([
+                    'exam_id',
+                    'question_id',
+                    'sort',
+                    'content',
+                    'option_A',
+                    'option_B',
+                    'option_C',
+                    'option_D',
+                    'option_E',
+                    'description',
+                ]);
+
+                return response()->json([
+                    'success'=>'Success',
+                    'data' => $questions,
+                    'room_id' => Room::getActiveRoom()->room_id,
+                    'exam_broadcast_id' =>$exam_broadcast->id
+                ],200);
+            }
+        }
+        return response()->json([
+            'message'=>'unauthorized',
+        ],401);
     }
 
     /**

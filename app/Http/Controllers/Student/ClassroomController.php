@@ -72,6 +72,8 @@ class ClassroomController extends Controller
     {
         $classrooms = Classroom::where('student_id',Auth::user()->student_id)->get();
 
+        $student_id = Auth::user()->student_id;
+
         $notification_broadcast = array();
         $teacher_name = array();
         $rooms = array();
@@ -97,7 +99,7 @@ class ClassroomController extends Controller
             array_push($teacher_name,$teacher->name.' '.$teacher->surname);
             array_push($rooms,$room);
         }
-        return view('student.examLaunch',compact('notification_broadcast','rooms'));
+        return view('student.examLaunch',compact('notification_broadcast','rooms','student_id'));
     }
 
     /**
