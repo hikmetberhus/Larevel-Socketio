@@ -80,8 +80,16 @@ Route::prefix('/teacher')
         Route::post('/notifications/store','NotificationController@store')->name('notification.store');
         Route::delete('/notifications/destroy/{id}','NotificationController@destroy')->name('notification.destroy');
 
-        /*-------------- ActivityStart Routes --------------------*/
+        /*-------------- Activity Start Routes --------------------*/
         Route::get('/activityStart','ActivityStartController@index')->name('activityStart');
+        Route::get('/getStudent/{exam_broadcast_id}','ActivityStartController@getStudent')->name('getStudent');
+        Route::post('/activityFinish','ActivityStartController@activityFinish')->name('activityFinish');
+        Route::post('/cloneAnswers','ActivityStartController@cloneAnswers')->name('cloneAnswers');
+
+        /*-------------- Reports Routes --------------------*/
+        Route::get('/reports','ReportController@index')->name('reports');
+        Route::get('/reports/{id}','ReportController@show')->name('reports.show');
+
 
     });
 

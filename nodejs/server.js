@@ -13,7 +13,9 @@ const nsp_exam = io.of('/exam');
 const baseUrl = 'http://127.0.0.1:8000/api';
 
 const exam_questions = [];
+const exam_broadcast_id = [];
 const room_id = [];
+const student_id = [];
 
 nsp_notification.on('connection', (socket) => {
 
@@ -39,16 +41,41 @@ nsp_exam.on('connection', (socket) => {
             console.log('Connected exam room name: '+ data.exam_broadcast_id + data.room_id);
 
             exam_questions.push(data);
+            exam_broadcast_id.push(data.exam_broadcast_id + data.room_id);
             room_id.push(data.room_id);
             //socket.emit('examStartConfirmed',{ message : 'success'});
             nsp_exam.to(data.exam_broadcast_id + data.room_id).emit('examStartConfirmed',{
-                message : 'success' ,
+                message : 'success',
                 room_id : data.exam_broadcast_id + data.room_id
             });
-
-
         });
     });
+
+    socket.on('roomExistsRequest', (data) => {
+
+        if (exam_broadcast_id.indexOf(data.exam_broadcast_id + data.room_id) !== -1)
+            socket.emit('roomExistsResponse',{message: 'success'});
+        else
+            socket.emit('roomExistsResponse',{message: 'wrong'});
+    });
+
+    socket.on('teacherFinishesExam', (data) => {
+
+        let index = room_id.indexOf(data.room_id);
+
+        room_id.splice(index,1);
+        exam_broadcast_id.splice(index,1);
+
+        console.log(room_id);
+        console.log(exam_broadcast_id);
+
+        nsp_exam.to(data.exam_broadcast_id + data.room_id).emit('examFinishEvent',{message : 'finish'});
+    });
+
+    socket.on('studentLeave', (data) => {
+       socket.leave(data.exam_broadcast_id);
+    });
+
 
     socket.on('studentConnectRequest', (data) => {
 
@@ -69,7 +96,9 @@ nsp_exam.on('connection', (socket) => {
                         room_id: data.room_id,
                         exam_broadcast_id: exam_broadcast_id
                     });
+
                     console.log('odaya katıldı: '+ data.room_id);
+
                 });
 
                 socket.emit('studentConnectSuccessful',sendToData);
@@ -93,6 +122,7 @@ nsp_exam.on('connection', (socket) => {
     });
 
     socket.on('saveQuestionAnswer', (data) => {
+
         axios.post(baseUrl+'/saveTempAnswer', {
             exam_broadcast_id: data.exam_broadcast_id,
             student_id: data.student_id,
@@ -100,7 +130,7 @@ nsp_exam.on('connection', (socket) => {
             answer_given: data.answer_given
         }).then(function (response) {
             // handle success
-            console.log(response);
+            //console.log(response);
         }).catch(function (error) {
             // handle error
             console.log(error);
@@ -119,7 +149,7 @@ nsp_exam.on('connection', (socket) => {
     console.log("bağlanıldı.");
     socket.emit('mesaj',{"name":"hikoçer"});
 
-    socket.on('sendNotification',function (data) {
+    socket.on('sendNotification',function (data) {,,
         io.emit('notification',data);
     });
 });*/

@@ -28,7 +28,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#" id="{{ App\Models\Room::getActiveRoom()->room_id }}"
-                               onclick="deleteRoom('{{ App\Models\Room::getActiveRoom()->room_name}}')">
+                               onclick="deleteRoom('{{ App\Models\Room::getActiveRoom()->room_name }}')">
                                 <span class="sidebar-mini"><i class="material-icons">delete</i> </span>
                                 <span class="sidebar-normal"> Sınıfı sil </span>
                             </a>
@@ -40,12 +40,12 @@
         </div>
         <ul class="nav">
 
-            <li class="nav-item">
-                <a class="nav-link" href="dashboard.html">
+            {{--<li class="nav-item {{ Request::is('teacher/liveResult*') ? 'active': '' }}">
+                <a class="nav-link" href="{{ route('teacher.liveResult') }}">
                     <i class="material-icons">settings_input_antenna</i>
                     <p> Canlı sonuçlar </p>
                 </a>
-            </li>
+            </li>--}}
             <li class="nav-item  {{ Request::is('teacher/activityStart*') ? 'active': '' }} ">
                 <a class="nav-link" href="{{ route('teacher.activityStart') }}">
                     <i class="material-icons">play_circle_outline</i>
@@ -70,8 +70,8 @@
                     <p> Sınıflar </p>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link " href="dashboard.html">
+            <li class="nav-item {{ Request::is('teacher/reports*') ? 'active': '' }}">
+                <a class="nav-link " href="{{ route('teacher.reports') }}">
                     <i class="material-icons">content_paste</i>
                     <p> Raporlar </p>
                 </a>

@@ -171,7 +171,7 @@
 
                             if(data.room_id === result.exam_broadcast_id+result.room_id)
                             {
-                                console.log('sınav başladı.');
+                               window.location.href = '/teacher';
                             }
                         });
 

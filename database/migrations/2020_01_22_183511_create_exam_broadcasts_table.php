@@ -21,6 +21,7 @@ class CreateExamBroadcastsTable extends Migration
                 ->on('teachers')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+            $table->boolean('is_active')->default(1);
             $table->unsignedInteger('exam_source');
             $table->foreign('exam_source')
                 ->references('exam_id')

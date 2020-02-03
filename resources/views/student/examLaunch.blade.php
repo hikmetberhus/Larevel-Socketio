@@ -32,16 +32,22 @@
         <div class="col-md-10 col-sm-10">
             <div class="card">
                 <div class="card-body">
-                    <form name="questionForm" method="" action="">
+
                         <input type="hidden" id="question_id" name="question_id" value="">
                         <div class="row justify-content-start">
                             <div class="col-md-2 col-sm-2">
                                 <span id="questionSort">#Soru-<b>1</b></span>
                             </div>
-                            <div class="col-md-6 col-sm-6"></div>
-                            <div class="col-md-4 col-sm-4">
-                                <span class="justify-content-start">Geçen süre: <b>00.12</b></span>
-                                <span class="ml-5"><button class="btn btn-warning btn-round btn-sm">Sınavı bitir</button></span>
+                            <div class="col-md-8 col-sm-8"></div>
+                            <div class="col-md-2 col-sm-2">
+                                <span>
+                                    <button id="examFinishBtn" onclick="examFinish()" class="btn btn-warning btn-round btn-sm">
+                                        <i class="material-icons">
+                                            power_settings_new
+                                        </i>
+                                        Sınavı bitir
+                                    </button>
+                                </span>
                             </div>
 
                         </div>
@@ -101,7 +107,7 @@
                                 <span id="qustionDescription">varsa sorunun açıklaması</span>
                             </div>
                         </div>
-                    </form>
+
                 </div>
             </div>
         </div>
@@ -233,7 +239,9 @@
     <script>
         const socket_exam = io.connect('http://localhost:3000/exam');
 
-        let room_id = window.location.pathname.split('/')[3];
+        const room_id = window.location.pathname.split('/')[3];
+
+        Dexie.delete('senedu');
 
         localStorage.setItem('student_id',{{ $student_id }});
 
@@ -306,6 +314,21 @@
 
         });
 
+        socket_exam.on('examFinishEvent', (data) => {
+            if(data.message === 'finish')
+            {
+                saveAnswer();
+
+                Dexie.delete('senedu');
+
+                socket_exam.emit('studentLeave',{exam_broadcast_id: localStorage.getItem('exam_broadcast_id')+room_id});
+
+                window.location.href = '/student';
+            }
+        });
+
+
+
         async function createDefaultTemplate(db = new Dexie('senedu')) {
             db.version(1).stores({
                 questions: 'question_id,exam_id,sort,content,option_A,option_B,option_C,option_D,option_E,description',
@@ -373,7 +396,8 @@
                 exam_broadcast_id: localStorage.getItem("exam_broadcast_id"),
                 student_id: localStorage.getItem("student_id"),
                 question_id: question_id,
-                answer_given: answer_given
+                answer_given: answer_given,
+                room_id: window.location.pathname.split('/')[3]
             };
 
             if (answer_given === undefined)
@@ -501,6 +525,36 @@
 
         function saveQuestionEmit(data,socket = socket_exam) {
             socket.emit('saveQuestionAnswer',data);
+        }
+
+        function examFinish() {
+
+            $('#examFinishBtn').click(function (e) {
+                e.preventDefault();
+            });
+
+            Swal.fire({
+                title: 'Sınavı bitirmek istediğine eminmisin?',
+                text: "Cavapların kalıcı olarak saklanacaktır. ",
+                icon: 'warning',
+                showCancelButton: true,
+                showCloseButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Evet, bitir!',
+                cancelButtonText: 'İptal'
+            }).then((result) => {
+                if (result.value) {
+
+                    saveAnswer();
+
+                    Dexie.delete('senedu');
+
+                    socket_exam.emit('studentLeave',{exam_broadcast_id: localStorage.getItem('exam_broadcast_id')+room_id})
+
+                    window.location.href = '/student'
+                }
+            })
         }
 
     </script>
